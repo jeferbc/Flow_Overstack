@@ -1,18 +1,15 @@
 class AnswersController < ApplicationController
   before_action :set_answer, only: [:show, :edit, :update, :destroy]
 
-
-  # GET /answers/1
-  def show
-  end
-
   # GET /answers/new
   def new
     @answer = Answer.new
+    @question = Question.find(params[:question_id])
   end
 
   # GET /answers/1/edit
   def edit
+    @question = Question.find(params[:question_id])
   end
 
   # POST /answers
@@ -38,6 +35,8 @@ class AnswersController < ApplicationController
   # DELETE /answers/1.json
   def destroy
     @answer.destroy
+    byebug
+    redirect_to question_path(id: params[:question_id])
   end
 
   private
@@ -48,6 +47,6 @@ class AnswersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def answer_params
-      params.require(:answer).permit(:content, :code, :votes, :question_id)
+      params.require(:answer).permit(:content, :code, :question_id, :id)
     end
 end

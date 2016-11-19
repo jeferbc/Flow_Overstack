@@ -10,23 +10,25 @@
           <%= @question.content %>
         </div>
       </div>
-      <%= link_to 'Edit', edit_question_path(@question) %>
-      <%= link_to 'Back', questions_path %>
+      <%= link_to 'Editar', edit_question_path(@question) %>
+      <%= link_to 'Atrás', questions_path %>
     </div>
     <div class="row">
       <div class="col-md-8 col-md-offset-2">
         <h1><%="#{@question.answers.size} Respuesta(s)" %></h1>
-        <%= link_to 'Crear Respuesta', new_answer_path %>
+        <%= link_to 'Crear Respuesta', new_answer_path(question_id: @question.id) %>
         <% @answers.each do |answer| %>
           <div class="panel panel-default">
             <div class="panel-heading">
-              <h3 class="panel-title"><%= answer.content %></h3>
+              <h3 class="panel-title"><p><%= answer.content %></p></h3>
             </div>
-            <% unless @question.code == nil  %>
+            <% unless answer.code == nil  %>
               <div class="panel-body">
-                <%= @question.code %>
+              <pre><%= answer.code %></pre>
               </div>
             <% end  %>
+            <%= link_to 'Editar', edit_answer_path(id: answer.id,question_id: @question.id) %>
+            <%= link_to 'Eliminar', answer_path(question_id: @question.id, id: answer.id), method: :delete, data: { confirm: 'Are you sure?' }  %>
           </div>
         <% end  %>
       </div>

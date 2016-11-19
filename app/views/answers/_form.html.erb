@@ -10,7 +10,7 @@
       </ul>
     </div>
   <% end %>
-  <%# hidden_field_tag "f[question_id]", @post.id %>
+  <%= hidden_field_tag "answer[question_id]", @question.id %>
   <div class="form-group">
     <%= f.label :content %>
     <%= f.text_area :content, class:"form-control" %>
