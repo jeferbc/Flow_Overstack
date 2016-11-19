@@ -7,6 +7,8 @@ class QuestionsController < ApplicationController
 
   def show
     @answers = @question.answers
+    @comment = Comment.new
+    @comments = @question.comments
   end
 
   # GET /questions/new

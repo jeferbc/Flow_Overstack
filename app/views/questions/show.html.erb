@@ -12,6 +12,36 @@
       </div>
       <%= link_to 'Editar', edit_question_path(@question) %>
       <%= link_to 'Atrás', questions_path %>
+      <a class="btn btn-primary" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+        Comentar
+      </a>
+      <div class="collapse" id="collapseExample">
+        <div class="well">
+          <%= form_for(@comment) do |f| %>
+          <div class="form-group">
+            <%= f.label :content %>
+            <%= f.text_area :content, class:"form-control" %>
+          </div>
+          <%= hidden_field_tag "comment[commentable_id]", @question.id %>
+          <%= hidden_field_tag "comment[commentable_type]", "Question" %>
+          <%= hidden_field_tag "question_id",@question.id %>
+          <div class="actions">
+            <%= f.submit 'Comentar', class: "btn btn-success" %>
+          </div>
+          <% end %>
+        </div>
+      </div>
+      <% @comments.each do |comment| %>
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title"><%= "comment description" %></h3>
+        </div>
+        <div class="panel-body">
+          <%= comment.content %>
+        </div>
+        <%= link_to 'Eliminar', comment_path(question_id: @question.id, id: comment.id), method: :delete, data: { confirm: 'Are you sure?' }  %>
+      </div>
+      <% end %>
     </div>
     <div class="row">
       <div class="col-md-8 col-md-offset-2">
@@ -29,7 +59,39 @@
             <% end  %>
             <%= link_to 'Editar', edit_answer_path(id: answer.id,question_id: @question.id) %>
             <%= link_to 'Eliminar', answer_path(question_id: @question.id, id: answer.id), method: :delete, data: { confirm: 'Are you sure?' }  %>
+            <a class="btn btn-primary" role="button" data-toggle="collapse" href="#collapseExample1" aria-expanded="false" aria-controls="collapseExample1">
+              Comentar
+            </a>
+            <div class="collapse" id="collapseExample1">
+              <div class="well">
+                <%= form_for(@comment) do |f| %>
+                <div class="form-group">
+                  <%= f.label :content %>
+                  <%= f.text_area :content, class:"form-control" %>
+                </div>
+                <%= hidden_field_tag "comment[commentable_id]", answer.id %>
+                <%= hidden_field_tag "comment[commentable_type]", "Answer" %>
+                <%= hidden_field_tag "question_id", @question.id %>
+                <div class="actions">
+                  <%= f.submit 'Comentar', class: "btn btn-success" %>
+                </div>
+                <% end %>
+              </div>
+            </div>
           </div>
+          <% @answers.each do |answer| %>
+            <% answer.comments.each do |comment| %>
+              <div class="panel panel-default">
+                <div class="panel-heading">
+                  <h3 class="panel-title"><%= "comment description" %></h3>
+                </div>
+                <div class="panel-body">
+                  <%= comment.content %>
+                </div>
+                <%= link_to 'Eliminar', comment_path(question_id: @question.id, id: comment.id), method: :delete, data: { confirm: 'Are you sure?' }  %>
+              </div>
+            <% end %>
+          <% end %>
         <% end  %>
       </div>
     </div>
