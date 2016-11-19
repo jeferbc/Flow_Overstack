@@ -1,0 +1,24 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-10 col-md-offset-1">
+      <p id="notice"><%= notice %></p>
+      <h1 class="text-center">Preguntas</h1>
+      <%= link_to 'New Question', new_question_path, class:"btn btn-primary" %>
+      <table class="table">
+        <tbody>
+          <% @questions.each do |question| %>
+          <tr>
+            <td><%= question.votes %></td>
+            <td><%= question.answers.size %></td>
+            <td>
+              <%= question.title %>
+            </td>
+            <td><%= link_to 'Show', question %> - <%= link_to 'Edit', edit_question_path(question) %> - <%= link_to 'Destroy', question, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+          </tr>
+          <% end %>
+        </tbody>
+      </table>
+      <br>
+    </div>
+  </div>
+</div>

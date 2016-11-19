@@ -1,0 +1,26 @@
+# == Schema Information
+#
+# Table name: answers
+#
+#  id          :integer          not null, primary key
+#  content     :text
+#  code        :text
+#  votes       :integer
+#  question_id :integer
+#  created_at  :datetime         not null
+#  updated_at  :datetime         not null
+#
+
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  content: MyText
+  code: MyText
+  votes: 1
+  question: one
+
+two:
+  content: MyText
+  code: MyText
+  votes: 1
+  question: two
