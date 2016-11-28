@@ -10,11 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161119194544) do
+ActiveRecord::Schema.define(version: 20161119220455) do
 
   create_table "answers", force: :cascade do |t|
     t.text     "content"
-    t.text     "code"
     t.integer  "question_id"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
@@ -35,6 +34,15 @@ ActiveRecord::Schema.define(version: 20161119194544) do
     t.text     "content"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "votes", force: :cascade do |t|
+    t.boolean  "amount"
+    t.string   "votable_type"
+    t.integer  "votable_id"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+    t.index ["votable_type", "votable_id"], name: "index_votes_on_votable_type_and_votable_id"
   end
 
 end

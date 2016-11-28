@@ -9,6 +9,9 @@ class QuestionsController < ApplicationController
     @answers = @question.answers
     @comment = Comment.new
     @comments = @question.comments
+    @vote = Vote.new
+    @votes = @question.votes.count
+    byebug
   end
 
   # GET /questions/new
