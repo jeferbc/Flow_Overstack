@@ -33,9 +33,6 @@ gem "font-awesome-rails"
 #Gems for autentication
 gem 'therubyracer'
 gem 'devise'
-gem 'omniauth'
-gem 'omniauth-digitalocean'
-gem 'omniauth-github'
 gem 'omniauth-facebook'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
