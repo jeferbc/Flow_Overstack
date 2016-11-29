@@ -1,3 +1,25 @@
 // Place all the styles related to the Questions controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+.panel-title-right{
+  float: right;
+  margin-top: 0px;
+  margin-bottom: 0;
+  font-size: 16px;
+  color: inherit;
+  margin-left: 10px;
+  position: relative;
+  top: -17px;
+}
+.panel-title{
+  font-style:oblique;
+  font-weight: bold;
+}
+
+.fa{
+  border-width: 0px;
+  border-style: none;
+  border-color: none;
+  border-image: none;
+  background-color: inherit;
+}

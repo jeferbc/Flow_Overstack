@@ -11,7 +11,6 @@ class QuestionsController < ApplicationController
     @comments = @question.comments
     @vote = Vote.new
     @votes = @question.votes.count
-    byebug
   end
 
   # GET /questions/new
