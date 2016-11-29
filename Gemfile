@@ -30,6 +30,13 @@ gem 'hirb'
 gem 'annotate'
 gem 'bootstrap-sass', '~> 3.3.6'
 gem "font-awesome-rails"
+#Gems for autentication
+gem 'therubyracer'
+gem 'devise'
+gem 'omniauth'
+gem 'omniauth-digitalocean'
+gem 'omniauth-github'
+gem 'omniauth-facebook'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
