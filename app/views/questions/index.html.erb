@@ -3,7 +3,7 @@
     <div class="col-md-10 col-md-offset-1">
       <p id="notice"><%= notice %></p>
       <div class="questions">
-        <h1 class="text-center">Preguntas</h1>
+        <h2 class="text-center">Top Questions</h2>
         <%= link_to 'New Question', new_question_path, class:"btn btn-primary" %>
       </div>
       <% @questions.each do |question| %>
@@ -28,7 +28,7 @@
               <%= link_to "#{question.title}", question %>
             </div>
             <div class="info">
-              <%= link_to "#{question.title}", question %>
+              <%= link_to "#{User.find(question.user_id).email.split('@')[0]}, hace #{time_ago_in_words(question.created_at)}" , question %>
             </div>
           </div>
           <div class="icons">

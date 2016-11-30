@@ -67,7 +67,7 @@
         <% @comments.each do |comment| %>
           <div class="panel panel-default">
             <div class="panel-heading">
-              <h3 class="panel-title"><%= "comment description" %></h3>
+              <h3 class="panel-title"><%= "#{User.find(comment.user_id).email.split('@')[0]}, hace #{time_ago_in_words(comment.created_at)}" %></h3>
               <h3 class="panel-title-right"><%= link_to '', comment_path(question_id: @question.id, id: comment.id), class: 'fa fa-trash', method: :delete, data: { confirm: 'Are you sure?' }  %></h3>
             </div>
             <div class="panel-body">
@@ -118,7 +118,7 @@
             <div class="question-panel">
               <div class="panel panel-default">
                 <div class="panel-heading">
-                  <h3 class="panel-title"><p><%="Descripcion answer"%></p></h3>
+                  <h3 class="panel-title"><p><%="#{User.find(answer.user_id).email.split('@')[0]}, hace #{time_ago_in_words(answer.created_at)}"%></p></h3>
                   <h3 class="panel-title-right"><%= link_to '', edit_answer_path(id: answer.id,question_id: @question.id), class:'fa fa-pencil-square-o' %></h3>
                   <h3 class="panel-title-right"><%= link_to '', answer_path(question_id: @question.id, id: answer.id), class:'fa fa-trash', method: :delete, data: { confirm: 'Are you sure?' }  %></h3>
                 </div>
@@ -153,7 +153,7 @@
           <% answer.comments.each do |comment| %>
           <div class="panel panel-default">
             <div class="panel-heading">
-              <h3 class="panel-title"><%= "comment description" %></h3>
+              <h3 class="panel-title"><%= "#{User.find(comment.user_id).email.split('@')[0]}, hace #{time_ago_in_words(comment.created_at)}" %></h3>
               <h3 class="panel-title-right"><%= link_to '', comment_path(question_id: @question.id, id: comment.id), class:'fa fa-trash', method: :delete, data: { confirm: 'Are you sure?' }  %></h3>
             </div>
             <div class="panel-body">
