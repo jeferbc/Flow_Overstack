@@ -1,27 +1,43 @@
 <div class="container">
   <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-10 col-md-offset-1">
       <p id="notice"><%= notice %></p>
-      <h1 class="text-center">Preguntas</h1>
-      <%= link_to 'New Question', new_question_path, class:"btn btn-primary" %>
-      <table class="table">
-        <thead>
-          <th>VOTOS</th>
-          <th>RESPUESTAS</th>
-          <th>PREGUNTAS</th>
-          <th>OPCIONES</th>
-        </thead>
-        <tbody>
-          <% @questions.each do |question| %>
-            <tr>
-              <td><%=question.votes.where(:amount => true).count - question.votes.where(:amount => false).count %></td>
-              <td><%= question.answers.size %></td>
-              <td><%= question.title %></td>
-              <td><%= link_to 'Mostrar', question, class: 'btn btn-success' %><%= link_to 'Editar', edit_question_path(question), class: 'btn btn-primary' %><%= link_to 'Eliminar', question, method: :delete, data: { confirm: 'Are you sure?' },class: 'btn btn-danger' %></td>
-            </tr>
-          <% end %>
-        </tbody>
-      </table>
+      <div class="questions">
+        <h1 class="text-center">Preguntas</h1>
+        <%= link_to 'New Question', new_question_path, class:"btn btn-primary" %>
+      </div>
+      <% @questions.each do |question| %>
+      <div class="list-group">
+        <div class="list-group-item">
+          <div class="metrics">
+            <div class="votes">
+              <div class="mini-counts">
+                <span><%= question.votes.size %></span>
+              </div>
+              <div>votes</div>
+            </div>
+            <div class="answers">
+              <div class="mini-counts">
+                <span><%= question.answers.size %></span>
+              </div>
+              <div>answers</div>
+            </div>
+          </div>
+          <div class="summary">
+            <div class="title">
+              <%= link_to "#{question.title}", question %>
+            </div>
+            <div class="info">
+              <%= link_to "#{question.title}", question %>
+            </div>
+          </div>
+          <div class="icons">
+            <h3 class="panel-title-right"><%= link_to "", edit_question_path(question), class: 'fa fa-pencil-square-o' %></h3>
+            <h3 class="panel-title-right"><%= link_to '', question_path(question), class: 'fa fa-trash', method: :delete, data: { confirm: 'Are you sure?' }  %></h3>
+          </div>
+        </div>
+      </div>
+    <% end %>
     </div>
   </div>
 </div>

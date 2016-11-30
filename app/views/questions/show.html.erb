@@ -1,76 +1,83 @@
 <div class="container">
   <div class="row">
-    <div class="col-md-1 col-md-offset-1">
-      <h3>
-        <%= form_for(@vote) do |f| %>
-          <%= hidden_field_tag "vote[amount]", true %>
-          <%= hidden_field_tag "vote[votable_id]", @question.id %>
-          <%= hidden_field_tag "vote[votable_type]", "Question" %>
-          <%= hidden_field_tag "question_id", @question.id %>
-          <%= button_tag type: 'submit', class: "fa fa-plus" do %>
-          <% end %>
-        <% end %>
-      </h3>
-      <h3><%=@question.votes.where(:amount => true).count - @question.votes.where(:amount => false).count %></h3>
-      <h3>
-        <%= form_for(@vote) do |f| %>
-          <%= hidden_field_tag "vote[amount]", false %>
-          <%= hidden_field_tag "vote[votable_id]", @question.id %>
-          <%= hidden_field_tag "vote[votable_type]", "Question" %>
-          <%= hidden_field_tag "question_id", @question.id %>
-          <%= button_tag type: 'submit', class: "fa fa-minus" do %>
-          <% end %>
-        <% end %>
-      </h3>
-    </div>
-    <div class="col-md-9">
-    <p id="notice"><%= notice %></p>
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h3 class="panel-title"><%= @question.title %> <i class="" aria-hidden="true"></i></h3>
-        <h3 class="panel-title-right"><%= link_to "", edit_question_path(@question), class: 'fa fa-pencil-square-o' %></h3>
-        <h3 class="panel-title-right"><%= link_to '', question_path(question_id: @question.id), class: 'fa fa-trash', method: :delete, data: { confirm: 'Are you sure?' }  %></h3>
-      </div>
-      <div class="panel-body">
-        <%= @question.content %>
-      </div>
-    </div>
-    <a class="btn btn-primary" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-      Coment
-    </a>
-    <br>
-    <br>
-    <div class="collapse" id="collapseExample">
-      <div class="well">
-        <%= form_for(@comment) do |f| %>
-        <div class="form-group">
-          <%= f.text_area :content, class:"form-control" %>
+    <div class="col-md-10 col-md-offset-1">
+      <div class="question-show">
+        <div class="panel-votes">
+          <h3>
+            <%= form_for(@vote) do |f| %>
+              <%= hidden_field_tag "vote[amount]", true %>
+              <%= hidden_field_tag "vote[votable_id]", @question.id %>
+              <%= hidden_field_tag "vote[votable_type]", "Question" %>
+              <%= hidden_field_tag "question_id", @question.id %>
+              <%= button_tag type: 'submit', class: "fa fa-plus" do %>
+              <% end %>
+            <% end %>
+          </h3>
+          <h3><%=@question.votes.where(:amount => true).count - @question.votes.where(:amount => false).count %></h3>
+          <h3>
+            <%= form_for(@vote) do |f| %>
+              <%= hidden_field_tag "vote[amount]", false %>
+              <%= hidden_field_tag "vote[votable_id]", @question.id %>
+              <%= hidden_field_tag "vote[votable_type]", "Question" %>
+              <%= hidden_field_tag "question_id", @question.id %>
+              <%= button_tag type: 'submit', class: "fa fa-minus" do %>
+              <% end %>
+            <% end %>
+          </h3>
         </div>
-        <%= hidden_field_tag "comment[commentable_id]", @question.id %>
-        <%= hidden_field_tag "comment[commentable_type]", "Question" %>
-        <%= hidden_field_tag "question_id",@question.id %>
-        <div class="actions">
-          <%= f.submit 'Coment', class: "btn btn-success" %>
+        <div class="question-panel">
+          <p id="notice"><%= notice %></p>
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h3 class="panel-title"><%= @question.title %> <i class="" aria-hidden="true"></i></h3>
+              <h3 class="panel-title-right"><%= link_to "", edit_question_path(@question), class: 'fa fa-pencil-square-o' %></h3>
+              <h3 class="panel-title-right"><%= link_to '', question_path(question_id: @question.id), class: 'fa fa-trash', method: :delete, data: { confirm: 'Are you sure?' }  %></h3>
+            </div>
+            <div class="panel-body">
+              <%= @question.content %>
+            </div>
+          </div>
         </div>
-        <% end %>
       </div>
     </div>
-    <% @comments.each do |comment| %>
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h3 class="panel-title"><%= "comment description" %></h3>
-        <h3 class="panel-title-right"><%= link_to '', comment_path(question_id: @question.id, id: comment.id), class: 'fa fa-trash', method: :delete, data: { confirm: 'Are you sure?' }  %></h3>
-      </div>
-      <div class="panel-body">
-        <%= comment.content %>
-      </div>
-    </div>
-    <% end %>
   </div>
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2">
+      <div class="comment_section">
+        <a class="btn btn-primary" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample">Add Coment</a>
+        <br><br>
+        <div class="collapse" id="collapseExample">
+          <div class="well">
+            <%= form_for(@comment) do |f| %>
+              <div class="form-group">
+                <%= f.text_area :content, class:"form-control" %>
+              </div>
+              <%= hidden_field_tag "comment[commentable_id]", @question.id %>
+              <%= hidden_field_tag "comment[commentable_type]", "Question" %>
+              <%= hidden_field_tag "question_id",@question.id %>
+              <div class="actions">
+                <%= f.submit 'Coment', class: "btn btn-success" %>
+              </div>
+            <% end %>
+          </div>
+        </div>
+        <% @comments.each do |comment| %>
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h3 class="panel-title"><%= "comment description" %></h3>
+              <h3 class="panel-title-right"><%= link_to '', comment_path(question_id: @question.id, id: comment.id), class: 'fa fa-trash', method: :delete, data: { confirm: 'Are you sure?' }  %></h3>
+            </div>
+            <div class="panel-body">
+              <%= comment.content %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
   </div>
     <div class="row">
-      <div class="col-md-8 col-md-offset-2">
-        <h3><%="#{@question.answers.size} Respuesta(s)" %></h3>
+      <div class="col-md-10 col-md-offset-1">
+        <h4 class="text-center"><%="#{@question.answers.size} Respuesta(s)" %></h4>
         <div class="panel-title-right">
           <%= link_to 'Crear Respuesta', new_answer_path(question_id: @question.id) %>
         </div>
@@ -78,43 +85,51 @@
     </div>
     <% @answers.each do |answer| %>
       <div class="row">
-        <div class="col-md-1 col-md-offset-1">
-          <h3>
-            <%= form_for(@vote) do |f| %>
-            <%= hidden_field_tag "vote[amount]", true %>
-            <%= hidden_field_tag "vote[votable_id]", answer.id %>
-            <%= hidden_field_tag "vote[votable_type]", "Answer" %>
-            <%= hidden_field_tag "question_id", @question.id %>
-            <%= button_tag type: 'submit', class: "fa fa-plus" do %>
-            <% end %>
-            <% end %>
-          </h3>
-          <h3><%=answer.votes.where(:amount => true).count - answer.votes.where(:amount => false).count %></h3>
-          <h3>
-            <%= form_for(@vote) do |f| %>
-            <%= hidden_field_tag "vote[amount]", false %>
-            <%= hidden_field_tag "vote[votable_id]", answer.id %>
-            <%= hidden_field_tag "vote[votable_type]", "Answer" %>
-            <%= hidden_field_tag "question_id", @question.id %>
-            <%= button_tag type: 'submit', class: "fa fa-minus" do %>
-            <% end %>
-            <% end %>
-          </h3>
-        </div>
-        <div class="col-md-8">
-          <div class="panel panel-default">
-            <div class="panel-heading">
-              <h3 class="panel-title"><p><%="Descripcion answer"%></p></h3>
-              <h3 class="panel-title-right"><%= link_to '', edit_answer_path(id: answer.id,question_id: @question.id), class:'fa fa-pencil-square-o' %></h3>
-              <h3 class="panel-title-right"><%= link_to '', answer_path(question_id: @question.id, id: answer.id), class:'fa fa-trash', method: :delete, data: { confirm: 'Are you sure?' }  %></h3>
+        <div class="col-md-10 col-md-offset-1">
+          <div class="question-show">
+            <div class="panel-votes">
+              <h3>
+                <%= form_for(@vote) do |f| %>
+                <%= hidden_field_tag "vote[amount]", true %>
+                <%= hidden_field_tag "vote[votable_id]", answer.id %>
+                <%= hidden_field_tag "vote[votable_type]", "Answer" %>
+                <%= hidden_field_tag "question_id", @question.id %>
+                <%= button_tag type: 'submit', class: "fa fa-plus" do %>
+                <% end %>
+                <% end %>
+              </h3>
+              <h3><%=answer.votes.where(:amount => true).count - answer.votes.where(:amount => false).count %></h3>
+              <h3>
+                <%= form_for(@vote) do |f| %>
+                <%= hidden_field_tag "vote[amount]", false %>
+                <%= hidden_field_tag "vote[votable_id]", answer.id %>
+                <%= hidden_field_tag "vote[votable_type]", "Answer" %>
+                <%= hidden_field_tag "question_id", @question.id %>
+                <%= button_tag type: 'submit', class: "fa fa-minus" do %>
+                <% end %>
+                <% end %>
+              </h3>
             </div>
-            <div class="panel-body">
-              <p><%= answer.content %></p>
+            <div class="question-panel">
+              <div class="panel panel-default">
+                <div class="panel-heading">
+                  <h3 class="panel-title"><p><%="Descripcion answer"%></p></h3>
+                  <h3 class="panel-title-right"><%= link_to '', edit_answer_path(id: answer.id,question_id: @question.id), class:'fa fa-pencil-square-o' %></h3>
+                  <h3 class="panel-title-right"><%= link_to '', answer_path(question_id: @question.id, id: answer.id), class:'fa fa-trash', method: :delete, data: { confirm: 'Are you sure?' }  %></h3>
+                </div>
+                <div class="panel-body">
+                  <p><%= answer.content %></p>
+                </div>
+              </div>
             </div>
           </div>
-          <a class="btn btn-primary" role="button" data-toggle="collapse" href="#collapseExample1" aria-expanded="false" aria-controls="collapseExample1">Coment</a>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+          <a class="btn btn-primary" role="button" data-toggle="collapse" href="#collapseExample<%= answer.id %>" aria-expanded="false" aria-controls="collapseExample<%= answer.id %>">Add Coment</a>
           <br><br>
-          <div class="collapse" id="collapseExample1">
+          <div class="collapse" id="collapseExample<%= answer.id %>">
             <div class="well">
               <%= form_for(@comment) do |f| %>
               <div class="form-group">
@@ -130,18 +145,17 @@
             </div>
           </div>
           <% answer.comments.each do |comment| %>
-            <div class="panel panel-default">
-              <div class="panel-heading">
-                <h3 class="panel-title"><%= "comment description" %></h3>
-                <h3 class="panel-title-right"><%= link_to '', comment_path(question_id: @question.id, id: comment.id), class:'fa fa-trash', method: :delete, data: { confirm: 'Are you sure?' }  %></h3>
-              </div>
-              <div class="panel-body">
-                <%= comment.content %>
-              </div>
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h3 class="panel-title"><%= "comment description" %></h3>
+              <h3 class="panel-title-right"><%= link_to '', comment_path(question_id: @question.id, id: comment.id), class:'fa fa-trash', method: :delete, data: { confirm: 'Are you sure?' }  %></h3>
             </div>
+            <div class="panel-body">
+              <%= comment.content %>
+            </div>
+          </div>
           <% end %>
         </div>
       </div>
-    <% end  %>
-  </div>
+  <% end %>
 </div>

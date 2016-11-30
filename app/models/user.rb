@@ -25,6 +25,10 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
   devise :omniauthable, :omniauth_providers => [:facebook]
+  # has_many :questions
+  # has_many :answers
+  # has_many :comments, as: :commentable
+  # has_many :votes, as: :votable
 
   def self.from_omniauth(auth)
     where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
