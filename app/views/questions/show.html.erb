@@ -2,38 +2,47 @@
   <div class="row">
     <div class="col-md-10 col-md-offset-1">
       <div class="question-show">
-        <div class="panel-votes">
-          <h3>
-            <%= form_for(@vote) do |f| %>
-              <%= hidden_field_tag "vote[amount]", true %>
-              <%= hidden_field_tag "vote[votable_id]", @question.id %>
-              <%= hidden_field_tag "vote[votable_type]", "Question" %>
-              <%= hidden_field_tag "question_id", @question.id %>
-              <%= hidden_field_tag "vote[user_id]", current_user.id %>
-              <%= button_tag type: 'submit', class: "fa fa-plus" do %>
-              <% end %>
-            <% end %>
-          </h3>
-          <h3><%=@question.votes.where(:amount => true).count - @question.votes.where(:amount => false).count %></h3>
-          <h3>
-            <%= form_for(@vote) do |f| %>
-              <%= hidden_field_tag "vote[amount]", false %>
-              <%= hidden_field_tag "vote[votable_id]", @question.id %>
-              <%= hidden_field_tag "vote[votable_type]", "Question" %>
-              <%= hidden_field_tag "question_id", @question.id %>
-              <%= hidden_field_tag "vote[user_id]", current_user.id %>
-              <%= button_tag type: 'submit', class: "fa fa-minus" do %>
-              <% end %>
-            <% end %>
-          </h3>
-        </div>
+        <% if user_signed_in? %>
+          <div class="panel-votes">
+            <h3>
+              <%= form_for(@vote) do |f| %>
+                <%= hidden_field_tag "vote[amount]", true %>
+                <%= hidden_field_tag "vote[votable_id]", @question.id %>
+                <%= hidden_field_tag "vote[votable_type]", "Question" %>
+                <%= hidden_field_tag "question_id", @question.id %>
+                <%= hidden_field_tag "vote[user_id]", current_user.id %>
+                <%= button_tag type: 'submit', class: "fa fa-plus" do %>
+                <% end %>
+              <% end %></h3>
+              <h3><%=@question.votes.where(:amount => true).count - @question.votes.where(:amount => false).count %></h3>
+              <h3>
+                <%= form_for(@vote) do |f| %>
+                  <%= hidden_field_tag "vote[amount]", false %>
+                  <%= hidden_field_tag "vote[votable_id]", @question.id %>
+                  <%= hidden_field_tag "vote[votable_type]", "Question" %>
+                  <%= hidden_field_tag "question_id", @question.id %>
+                  <%= hidden_field_tag "vote[user_id]", current_user.id %>
+                  <%= button_tag type: 'submit', class: "fa fa-minus" do %>
+                  <% end %>
+                <% end %></h3>
+          </div>
+        <%else  %>
+          <div class="votes-show">
+            <div class="mini-counts">
+              <span><%= @question.votes.size %></span>
+            </div>
+            <div>votes</div>
+          </div>
+        <% end %>
         <div class="question-panel">
           <p id="notice"><%= notice %></p>
           <div class="panel panel-default">
             <div class="panel-heading">
               <h3 class="panel-title"><%= @question.title %> <i class="" aria-hidden="true"></i></h3>
-              <h3 class="panel-title-right"><%= link_to "", edit_question_path(@question), class: 'fa fa-pencil-square-o' %></h3>
-              <h3 class="panel-title-right"><%= link_to '', question_path(question_id: @question.id), class: 'fa fa-trash', method: :delete, data: { confirm: 'Are you sure?' }  %></h3>
+              <% if user_signed_in? && current_user.id == User.find(@question.user_id).id  %>
+                <h3 class="panel-title-right"><%= link_to "", edit_question_path(@question), class: 'fa fa-pencil-square-o' %></h3>
+                <h3 class="panel-title-right"><%= link_to '', question_path(question_id: @question.id), class: 'fa fa-trash', method: :delete, data: { confirm: 'Are you sure?' }  %></h3>
+              <% end %>
             </div>
             <div class="panel-body">
               <%= @question.content %>
@@ -46,29 +55,33 @@
   <div class="row">
     <div class="col-md-8 col-md-offset-2">
       <div class="comment_section">
-        <a class="btn btn-primary" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample">Add Coment</a>
-        <br><br>
-        <div class="collapse" id="collapseExample">
-          <div class="well">
-            <%= form_for(@comment) do |f| %>
-              <div class="form-group">
-                <%= f.text_area :content, class:"form-control" %>
-              </div>
-              <%= hidden_field_tag "comment[commentable_id]", @question.id %>
-              <%= hidden_field_tag "comment[commentable_type]", "Question" %>
-              <%= hidden_field_tag "question_id",@question.id %>
-              <%= hidden_field_tag "comment[user_id]", current_user.id %>
-              <div class="actions">
-                <%= f.submit 'Coment', class: "btn btn-success" %>
-              </div>
-            <% end %>
+        <% if user_signed_in? %>
+          <a class="btn btn-primary" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample">Add Coment</a>
+          <br><br>
+          <div class="collapse" id="collapseExample">
+            <div class="well">
+              <%= form_for(@comment) do |f| %>
+                <div class="form-group">
+                  <%= f.text_area :content, class:"form-control" %>
+                </div>
+                <%= hidden_field_tag "comment[commentable_id]", @question.id %>
+                <%= hidden_field_tag "comment[commentable_type]", "Question" %>
+                <%= hidden_field_tag "question_id",@question.id %>
+                <%= hidden_field_tag "comment[user_id]", current_user.id %>
+                <div class="actions">
+                  <%= f.submit 'Coment', class: "btn btn-success" %>
+                </div>
+              <% end %>
+            </div>
           </div>
-        </div>
+        <% end %>
         <% @comments.each do |comment| %>
           <div class="panel panel-default">
             <div class="panel-heading">
               <h3 class="panel-title"><%= "#{User.find(comment.user_id).email.split('@')[0]}, hace #{time_ago_in_words(comment.created_at)}" %></h3>
+              <% if user_signed_in? && current_user.id == User.find(comment.user_id).id  %>
               <h3 class="panel-title-right"><%= link_to '', comment_path(question_id: @question.id, id: comment.id), class: 'fa fa-trash', method: :delete, data: { confirm: 'Are you sure?' }  %></h3>
+              <% end %>
             </div>
             <div class="panel-body">
               <%= comment.content %>
@@ -81,46 +94,59 @@
     <div class="row">
       <div class="col-md-10 col-md-offset-1">
         <h4 class="text-center"><%="#{@question.answers.size} Respuesta(s)" %></h4>
-        <div class="panel-title-right">
-          <%= link_to 'Crear Respuesta', new_answer_path(question_id: @question.id) %>
-        </div>
+        <% if user_signed_in? %>
+          <div class="panel-title-right">
+            <%= link_to 'Crear Respuesta', new_answer_path(question_id: @question.id) %>
+          </div>
+        <% end %>
       </div>
     </div>
     <% @answers.each do |answer| %>
       <div class="row">
         <div class="col-md-10 col-md-offset-1">
           <div class="question-show">
-            <div class="panel-votes">
-              <h3>
-                <%= form_for(@vote) do |f| %>
-                <%= hidden_field_tag "vote[amount]", true %>
-                <%= hidden_field_tag "vote[votable_id]", answer.id %>
-                <%= hidden_field_tag "vote[votable_type]", "Answer" %>
-                <%= hidden_field_tag "question_id", @question.id %>
-                <%= hidden_field_tag "vote[user_id]", current_user.id %>
-                <%= button_tag type: 'submit', class: "fa fa-plus" do %>
-                <% end %>
-                <% end %>
-              </h3>
-              <h3><%=answer.votes.where(:amount => true).count - answer.votes.where(:amount => false).count %></h3>
-              <h3>
-                <%= form_for(@vote) do |f| %>
-                <%= hidden_field_tag "vote[amount]", false %>
-                <%= hidden_field_tag "vote[votable_id]", answer.id %>
-                <%= hidden_field_tag "vote[votable_type]", "Answer" %>
-                <%= hidden_field_tag "question_id", @question.id %>
-                <%= hidden_field_tag "vote[user_id]", current_user.id %>
-                <%= button_tag type: 'submit', class: "fa fa-minus" do %>
-                <% end %>
-                <% end %>
-              </h3>
-            </div>
+            <% if user_signed_in? %>
+              <div class="panel-votes">
+                <h3>
+                  <%= form_for(@vote) do |f| %>
+                  <%= hidden_field_tag "vote[amount]", true %>
+                  <%= hidden_field_tag "vote[votable_id]", answer.id %>
+                  <%= hidden_field_tag "vote[votable_type]", "Answer" %>
+                  <%= hidden_field_tag "question_id", @question.id %>
+                  <%= hidden_field_tag "vote[user_id]", current_user.id %>
+                  <%= button_tag type: 'submit', class: "fa fa-plus" do %>
+                  <% end %>
+                  <% end %>
+                </h3>
+                <h3><%=answer.votes.where(:amount => true).count - answer.votes.where(:amount => false).count %></h3>
+                <h3>
+                  <%= form_for(@vote) do |f| %>
+                  <%= hidden_field_tag "vote[amount]", false %>
+                  <%= hidden_field_tag "vote[votable_id]", answer.id %>
+                  <%= hidden_field_tag "vote[votable_type]", "Answer" %>
+                  <%= hidden_field_tag "question_id", @question.id %>
+                  <%= hidden_field_tag "vote[user_id]", current_user.id %>
+                  <%= button_tag type: 'submit', class: "fa fa-minus" do %>
+                  <% end %>
+                  <% end %>
+                </h3>
+              </div>
+            <% else %>
+              <div class="votes-show">
+                <div class="mini-counts">
+                  <span><%= @question.votes.size %></span>
+                </div>
+                <div>votes</div>
+              </div>
+            <% end %>
             <div class="question-panel">
               <div class="panel panel-default">
                 <div class="panel-heading">
                   <h3 class="panel-title"><p><%="#{User.find(answer.user_id).email.split('@')[0]}, hace #{time_ago_in_words(answer.created_at)}"%></p></h3>
-                  <h3 class="panel-title-right"><%= link_to '', edit_answer_path(id: answer.id,question_id: @question.id), class:'fa fa-pencil-square-o' %></h3>
-                  <h3 class="panel-title-right"><%= link_to '', answer_path(question_id: @question.id, id: answer.id), class:'fa fa-trash', method: :delete, data: { confirm: 'Are you sure?' }  %></h3>
+                  <% if user_signed_in? && current_user.id == User.find(answer.user_id).id  %>
+                    <h3 class="panel-title-right"><%= link_to '', edit_answer_path(id: answer.id,question_id: @question.id), class:'fa fa-pencil-square-o' %></h3>
+                    <h3 class="panel-title-right"><%= link_to '', answer_path(question_id: @question.id, id: answer.id), class:'fa fa-trash', method: :delete, data: { confirm: 'Are you sure?' }  %></h3>
+                  <% end %>
                 </div>
                 <div class="panel-body">
                   <p><%= answer.content %></p>
@@ -132,29 +158,33 @@
       </div>
       <div class="row">
         <div class="col-md-8 col-md-offset-2">
-          <a class="btn btn-primary" role="button" data-toggle="collapse" href="#collapseExample<%= answer.id %>" aria-expanded="false" aria-controls="collapseExample<%= answer.id %>">Add Coment</a>
-          <br><br>
-          <div class="collapse" id="collapseExample<%= answer.id %>">
-            <div class="well">
-              <%= form_for(@comment) do |f| %>
-              <div class="form-group">
-                <%= f.text_area :content, class:"form-control" %>
+          <% if user_signed_in? %>
+            <a class="btn btn-primary" role="button" data-toggle="collapse" href="#collapseExample<%= answer.id %>" aria-expanded="false" aria-controls="collapseExample<%= answer.id %>">Add Coment</a>
+            <br><br>
+            <div class="collapse" id="collapseExample<%= answer.id %>">
+              <div class="well">
+                <%= form_for(@comment) do |f| %>
+                <div class="form-group">
+                  <%= f.text_area :content, class:"form-control" %>
+                </div>
+                <%= hidden_field_tag "comment[commentable_id]", answer.id %>
+                <%= hidden_field_tag "comment[commentable_type]", "Answer" %>
+                <%= hidden_field_tag "question_id", @question.id %>
+                <%= hidden_field_tag "comment[user_id]", current_user.id %>
+                <div class="actions">
+                  <%= f.submit 'Coment', class: "btn btn-success" %>
+                </div>
+                <% end %>
               </div>
-              <%= hidden_field_tag "comment[commentable_id]", answer.id %>
-              <%= hidden_field_tag "comment[commentable_type]", "Answer" %>
-              <%= hidden_field_tag "question_id", @question.id %>
-              <%= hidden_field_tag "comment[user_id]", current_user.id %>
-              <div class="actions">
-                <%= f.submit 'Coment', class: "btn btn-success" %>
-              </div>
-              <% end %>
             </div>
-          </div>
+          <% end %>
           <% answer.comments.each do |comment| %>
           <div class="panel panel-default">
             <div class="panel-heading">
               <h3 class="panel-title"><%= "#{User.find(comment.user_id).email.split('@')[0]}, hace #{time_ago_in_words(comment.created_at)}" %></h3>
-              <h3 class="panel-title-right"><%= link_to '', comment_path(question_id: @question.id, id: comment.id), class:'fa fa-trash', method: :delete, data: { confirm: 'Are you sure?' }  %></h3>
+              <% if user_signed_in? && current_user.id == User.find(comment.user_id).id  %>
+                <h3 class="panel-title-right"><%= link_to '', comment_path(question_id: @question.id, id: comment.id), class:'fa fa-trash', method: :delete, data: { confirm: 'Are you sure?' }  %></h3>
+              <% end %>
             </div>
             <div class="panel-body">
               <%= comment.content %>
