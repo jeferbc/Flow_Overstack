@@ -9,6 +9,7 @@
               <%= hidden_field_tag "vote[votable_id]", @question.id %>
               <%= hidden_field_tag "vote[votable_type]", "Question" %>
               <%= hidden_field_tag "question_id", @question.id %>
+              <%= hidden_field_tag "vote[user_id]", current_user.id %>
               <%= button_tag type: 'submit', class: "fa fa-plus" do %>
               <% end %>
             <% end %>
@@ -20,6 +21,7 @@
               <%= hidden_field_tag "vote[votable_id]", @question.id %>
               <%= hidden_field_tag "vote[votable_type]", "Question" %>
               <%= hidden_field_tag "question_id", @question.id %>
+              <%= hidden_field_tag "vote[user_id]", current_user.id %>
               <%= button_tag type: 'submit', class: "fa fa-minus" do %>
               <% end %>
             <% end %>
@@ -55,6 +57,7 @@
               <%= hidden_field_tag "comment[commentable_id]", @question.id %>
               <%= hidden_field_tag "comment[commentable_type]", "Question" %>
               <%= hidden_field_tag "question_id",@question.id %>
+              <%= hidden_field_tag "comment[user_id]", current_user.id %>
               <div class="actions">
                 <%= f.submit 'Coment', class: "btn btn-success" %>
               </div>
@@ -94,6 +97,7 @@
                 <%= hidden_field_tag "vote[votable_id]", answer.id %>
                 <%= hidden_field_tag "vote[votable_type]", "Answer" %>
                 <%= hidden_field_tag "question_id", @question.id %>
+                <%= hidden_field_tag "vote[user_id]", current_user.id %>
                 <%= button_tag type: 'submit', class: "fa fa-plus" do %>
                 <% end %>
                 <% end %>
@@ -105,6 +109,7 @@
                 <%= hidden_field_tag "vote[votable_id]", answer.id %>
                 <%= hidden_field_tag "vote[votable_type]", "Answer" %>
                 <%= hidden_field_tag "question_id", @question.id %>
+                <%= hidden_field_tag "vote[user_id]", current_user.id %>
                 <%= button_tag type: 'submit', class: "fa fa-minus" do %>
                 <% end %>
                 <% end %>
@@ -138,6 +143,7 @@
               <%= hidden_field_tag "comment[commentable_id]", answer.id %>
               <%= hidden_field_tag "comment[commentable_type]", "Answer" %>
               <%= hidden_field_tag "question_id", @question.id %>
+              <%= hidden_field_tag "comment[user_id]", current_user.id %>
               <div class="actions">
                 <%= f.submit 'Coment', class: "btn btn-success" %>
               </div>

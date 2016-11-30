@@ -20,7 +20,7 @@
     <%= f.label :content %>
     <%= f.text_area :content, class: "form-control"%>
   </div>
-
+  <%= hidden_field_tag "question[user_id]", current_user.id %>
   <div class="actions">
     <%= f.submit 'Guardar', class:"btn btn-success" %>
     <%= link_to 'Cancelar', questions_path, class: 'btn btn-danger' %>

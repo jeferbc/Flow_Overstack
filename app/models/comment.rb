@@ -6,11 +6,12 @@
 #  content          :text
 #  commentable_type :string
 #  commentable_id   :integer
+#  user_id          :integer
 #  created_at       :datetime         not null
 #  updated_at       :datetime         not null
 #
 
 class Comment < ApplicationRecord
   belongs_to :commentable, polymorphic: true
-  #belongs_to :user
+  belongs_to :user
 end
