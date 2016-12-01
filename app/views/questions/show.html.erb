@@ -33,64 +33,63 @@
                   <% end %>
                 <% end %></h3>
           </div>
-
-        <div class="question-panel">
-          <p id="notice"><%= notice %></p>
-          <div class="panel panel-default">
-            <div class="panel-heading">
-              <h3 class="panel-title"><%= @question.title %> <i class="" aria-hidden="true"></i></h3>
-              <% if user_signed_in? && current_user.id == User.find(@question.user_id).id  %>
-                <h3 class="panel-title-right"><%= link_to "", edit_question_path(@question), class: 'fa fa-pencil-square-o' %></h3>
-                <h3 class="panel-title-right"><%= link_to '', question_path(question_id: @question.id), class: 'fa fa-trash', method: :delete, data: { confirm: 'Are you sure?' }  %></h3>
-              <% end %>
-            </div>
-            <div class="panel-body">
-              <%= @question.content %>
+          <div class="question-panel">
+            <p id="notice"><%= notice %></p>
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <h3 class="panel-title"><%= @question.title %> <i class="" aria-hidden="true"></i></h3>
+                <% if user_signed_in? && current_user.id == User.find(@question.user_id).id  %>
+                  <h3 class="panel-title-right"><%= link_to "", edit_question_path(@question), class: 'fa fa-pencil-square-o' %></h3>
+                  <h3 class="panel-title-right"><%= link_to '', question_path(question_id: @question.id), class: 'fa fa-trash', method: :delete, data: { confirm: 'Are you sure?' }  %></h3>
+                <% end %>
+              </div>
+              <div class="panel-body">
+                <%= @question.content %>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-  <div class="row">
-    <div class="col-md-8 col-md-offset-2">
-      <div class="comment_section">
-        <% if user_signed_in? %>
-          <a class="btn btn-primary" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample">Add Coment</a>
-          <br><br>
-          <div class="collapse" id="collapseExample">
-            <div class="well">
-              <%= form_for(@comment) do |f| %>
-                <div class="form-group">
-                  <%= f.text_area :content, class:"form-control" %>
-                </div>
-                <%= hidden_field_tag "comment[commentable_id]", @question.id %>
-                <%= hidden_field_tag "comment[commentable_type]", "Question" %>
-                <%= hidden_field_tag "question_id",@question.id %>
-                <%= hidden_field_tag "comment[user_id]", current_user.id %>
-                <div class="actions">
-                  <%= f.submit 'Coment', class: "btn btn-success" %>
-                </div>
-              <% end %>
+    <div class="row">
+      <div class="col-md-8 col-md-offset-2">
+        <div class="comment_section">
+          <% if user_signed_in? %>
+            <a class="btn btn-primary" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample">Add Coment</a>
+            <br><br>
+            <div class="collapse" id="collapseExample">
+              <div class="well">
+                <%= form_for(@comment) do |f| %>
+                  <div class="form-group">
+                    <%= f.text_area :content, class:"form-control" %>
+                  </div>
+                  <%= hidden_field_tag "comment[commentable_id]", @question.id %>
+                  <%= hidden_field_tag "comment[commentable_type]", "Question" %>
+                  <%= hidden_field_tag "question_id",@question.id %>
+                  <%= hidden_field_tag "comment[user_id]", current_user.id %>
+                  <div class="actions">
+                    <%= f.submit 'Coment', class: "btn btn-success" %>
+                  </div>
+                <% end %>
+              </div>
             </div>
-          </div>
-        <% end %>
-        <% @comments.each do |comment| %>
-          <div class="panel panel-default">
-            <div class="panel-heading">
-              <h3 class="panel-title"><%= "#{User.find(comment.user_id).email.split('@')[0]}, hace #{time_ago_in_words(comment.created_at)}" %></h3>
-              <% if user_signed_in? && current_user.id == User.find(comment.user_id).id  %>
-              <h3 class="panel-title-right"><%= link_to '', comment_path(question_id: @question.id, id: comment.id), class: 'fa fa-trash', method: :delete, data: { confirm: 'Are you sure?' }  %></h3>
-              <% end %>
+          <% end %>
+          <% @comments.each do |comment| %>
+            <div class="panel panel-default">
+              <div class="comment">
+                <p><%= "#{User.find(comment.user_id).email.split('@')[0]}, hace #{time_ago_in_words(comment.created_at)}" %></p>
+                <% if user_signed_in? && current_user.id == User.find(comment.user_id).id  %>
+                <h3 class="panel-title-right"><%= link_to '', comment_path(question_id: @question.id, id: comment.id), class: 'fa fa-trash', method: :delete, data: { confirm: 'Are you sure?' }  %></h3>
+                <% end %>
+              </div>
+              <div class="panel-body">
+                <%= comment.content %>
+              </div>
             </div>
-            <div class="panel-body">
-              <%= comment.content %>
-            </div>
-          </div>
-        <% end %>
+          <% end %>
+        </div>
       </div>
     </div>
-  </div>
     <div class="row">
       <div class="col-md-10 col-md-offset-1">
         <h4 class="text-center"><%="#{@question.answers.size} Respuesta(s)" %></h4>
@@ -140,8 +139,8 @@
             </div>
             <div class="question-panel">
               <div class="panel panel-default">
-                <div class="panel-heading">
-                  <h3 class="panel-title"><p><%="#{User.find(answer.user_id).email.split('@')[0]}, hace #{time_ago_in_words(answer.created_at)}"%></p></h3>
+                <div class="comment">
+                  <p><%="#{User.find(answer.user_id).email.split('@')[0]}, hace #{time_ago_in_words(answer.created_at)}"%></p>
                   <% if user_signed_in? && current_user.id == User.find(answer.user_id).id  %>
                     <h3 class="panel-title-right"><%= link_to '', edit_answer_path(id: answer.id,question_id: @question.id), class:'fa fa-pencil-square-o' %></h3>
                     <h3 class="panel-title-right"><%= link_to '', answer_path(question_id: @question.id, id: answer.id), class:'fa fa-trash', method: :delete, data: { confirm: 'Are you sure?' }  %></h3>
@@ -179,8 +178,8 @@
           <% end %>
           <% answer.comments.each do |comment| %>
           <div class="panel panel-default">
-            <div class="panel-heading">
-              <h3 class="panel-title"><%= "#{User.find(comment.user_id).email.split('@')[0]}, hace #{time_ago_in_words(comment.created_at)}" %></h3>
+            <div class="comment">
+              <p><%= "#{User.find(comment.user_id).email.split('@')[0]}, hace #{time_ago_in_words(comment.created_at)}" %></p>
               <% if user_signed_in? && current_user.id == User.find(comment.user_id).id  %>
                 <h3 class="panel-title-right"><%= link_to '', comment_path(question_id: @question.id, id: comment.id), class:'fa fa-trash', method: :delete, data: { confirm: 'Are you sure?' }  %></h3>
               <% end %>
