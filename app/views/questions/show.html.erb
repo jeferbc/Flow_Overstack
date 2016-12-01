@@ -44,7 +44,7 @@
                 <% end %>
               </div>
               <div class="panel-body">
-                <%= @question.content %>
+              <p class="question-content"><%= @question.content %></p>
               </div>
             </div>
           </div>
@@ -83,7 +83,7 @@
                 <% end %>
               </div>
               <div class="panel-body">
-                <%= comment.content %>
+                <p class="content"><%= comment.content %></p>
               </div>
             </div>
           <% end %>
@@ -147,7 +147,7 @@
                   <% end %>
                 </div>
                 <div class="panel-body">
-                  <p><%= answer.content %></p>
+                  <p class="question-content"><%= answer.content %></p>
                 </div>
               </div>
             </div>
@@ -185,7 +185,7 @@
               <% end %>
             </div>
             <div class="panel-body">
-              <%= comment.content %>
+              <p class="content"><%= comment.content %></p>
             </div>
           </div>
           <% end %>

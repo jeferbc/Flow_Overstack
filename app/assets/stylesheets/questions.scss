@@ -54,6 +54,9 @@
   font-style:oblique;
   font-weight: bold;
 }
+.question-content {
+    font-size: 16px;
+}
 
 .fa{
   border-width: 0px;
@@ -130,6 +133,7 @@
   white-space: nowrap;
   width: 97%;
   display: block;
+  text-transform: capitalize;
 }
 .icons{
   width: 5%;
