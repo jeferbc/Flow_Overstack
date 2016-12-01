@@ -14,27 +14,28 @@
                 <% end %>
                 <%= button_tag type: 'submit', class: "fa fa-plus" do %>
                 <% end %>
-              <% end %></h3>
-              <% if (Vote.already_vote?(current_user.id, @question.id,"Question")) %>
-                <h3 class= <%= @question.votes.where(:amount => true).count - @question.votes.where(:amount => false).count >= 0 ? 'success' : 'danger'; %>><%=@question.votes.where(:amount => true).count - @question.votes.where(:amount => false).count %></h3>
-              <% else %>
-                <h3><%=@question.votes.where(:amount => true).count - @question.votes.where(:amount => false).count %></h3>
               <% end %>
-              <h3>
-                <%= form_for(@vote) do |f| %>
-                  <%= hidden_field_tag "vote[amount]", false %>
-                  <%= hidden_field_tag "vote[votable_id]", @question.id %>
-                  <%= hidden_field_tag "vote[votable_type]", "Question" %>
-                  <%= hidden_field_tag "question_id", @question.id %>
-                  <% if user_signed_in? %>
-                    <%= hidden_field_tag "vote[user_id]", current_user.id %>
-                  <% end %>
-                  <%= button_tag type: 'submit', class: "fa fa-minus" do %>
-                  <% end %>
-                <% end %></h3>
+            </h3>
+            <% if (user_signed_in? && Vote.already_vote?(current_user.id, @question.id,"Question")) %>
+              <h3 class= <%= @question.votes.where(:amount => true).count - @question.votes.where(:amount => false).count >= 0 ? 'success' : 'danger'; %>><%=@question.votes.where(:amount => true).count - @question.votes.where(:amount => false).count %></h3>
+            <% else %>
+              <h3><%=@question.votes.where(:amount => true).count - @question.votes.where(:amount => false).count %></h3>
+            <% end %>
+            <h3>
+              <%= form_for(@vote) do |f| %>
+                <%= hidden_field_tag "vote[amount]", false %>
+                <%= hidden_field_tag "vote[votable_id]", @question.id %>
+                <%= hidden_field_tag "vote[votable_type]", "Question" %>
+                <%= hidden_field_tag "question_id", @question.id %>
+                <% if user_signed_in? %>
+                  <%= hidden_field_tag "vote[user_id]", current_user.id %>
+                <% end %>
+                <%= button_tag type: 'submit', class: "fa fa-minus" do %>
+                <% end %>
+              <% end %>
+            </h3>
           </div>
           <div class="question-panel">
-            <p id="notice"><%= notice %></p>
             <div class="panel panel-default">
               <div class="panel-heading">
                 <h3 class="panel-title"><%= @question.title %> <i class="" aria-hidden="true"></i></h3>
@@ -118,7 +119,7 @@
                 <% end %>
                 <% end %>
               </h3>
-              <% if (Vote.already_vote?(current_user.id, answer.id,"Answer")) %>
+              <% if (user_signed_in? && Vote.already_vote?(current_user.id, answer.id,"Answer")) %>
                 <h3 class= <%= answer.votes.where(:amount => true).count - answer.votes.where(:amount => false).count >= 0 ? 'success' : 'danger'; %>><%=answer.votes.where(:amount => true).count - answer.votes.where(:amount => false).count %></h3>
               <% else %>
                 <h3><%=answer.votes.where(:amount => true).count - answer.votes.where(:amount => false).count %></h3>

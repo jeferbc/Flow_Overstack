@@ -27,6 +27,7 @@ class CommentsController < ApplicationController
     @comment = Comment.new(comment_params)
     if @comment.save
     else
+      flash[:alert] = "The comment hasn't been created, due a system error"
     end
     redirect_to question_path(id: params[:question_id])
   end
@@ -34,13 +35,11 @@ class CommentsController < ApplicationController
   # PATCH/PUT /comments/1
   # PATCH/PUT /comments/1.json
   def update
-
-      if @comment.update(comment_params)
-
-      else
-
-      end
-      redirect_to question_path(id: params[:question_id])
+    if @comment.update(comment_params)
+    else
+      flash[:alert] = "The comment hasn't been edited, due a system error"
+    end
+    redirect_to question_path(id: params[:question_id])
   end
 
   # DELETE /comments/1

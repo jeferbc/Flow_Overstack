@@ -9,33 +9,16 @@ class VotesController < ApplicationController
         @vote = Vote.new(vote_params)
         if @vote.save
         else
+          flash[:alert] = "The Vote hasn't been saved, due an system error"
         end
       else
         Vote.destroy_vote?(current_user.id, params[:vote][:votable_id], params[:vote][:votable_type])
+        flash[:notice] = "The Vote has been eliminated"
       end
     else
-
+      flash[:alert] = "You must been logged in order to vote"
     end
     redirect_to question_path(id: params[:question_id])
-  end
-
-  # PATCH/PUT /comments/1
-  # PATCH/PUT /comments/1.json
-  def update
-      if @vote.update(vote_params)
-
-      else
-
-      end
-      redirect_to question_path(id: params[:question_id])
-  end
-
-  # DELETE /comments/1
-  # DELETE /comments/1.json
-  def destroy
-    @vote.destroy
-    redirect_to question_path(id: params[:question_id])
-
   end
 
   private

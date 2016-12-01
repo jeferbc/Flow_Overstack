@@ -26,19 +26,18 @@ class QuestionsController < ApplicationController
   # POST /questions
   def create
     @question = Question.new(question_params)
-      if @question.save
-        redirect_to question_path(id: @question.id)
-      else
-
-      end
-
+    if @question.save
+      redirect_to question_path(id: @question.id)
+    else
+      flash[:alert] = "The Question hasn't been created, due a system error"
+    end
   end
   def update
-      if @question.update(question_params)
-        redirect_to question_path
-      else
-
-      end
+    if @question.update(question_params)
+      redirect_to question_path
+    else
+      flash[:alert] = "The Question hasn't been edited, due a system error"
+    end
   end
 
 

@@ -18,6 +18,7 @@ class AnswersController < ApplicationController
     @answer = Answer.new(answer_params)
     if @answer.save
     else
+      flash[:alert] = "The answer hasn't been created, due a system error"
     end
     redirect_to question_path(id: params[:answer][:question_id])
   end
@@ -26,8 +27,8 @@ class AnswersController < ApplicationController
   # PATCH/PUT /answers/1.json
   def update
     if @answer.update(answer_params)
-
     else
+      flash[:alert] = "The answer hasn't been edited, due a system error"
     end
     redirect_to question_path(id: params[:answer][:question_id])
   end
@@ -35,7 +36,6 @@ class AnswersController < ApplicationController
   # DELETE /answers/1.json
   def destroy
     @answer.destroy
-    byebug
     redirect_to question_path(id: params[:question_id])
   end
 
