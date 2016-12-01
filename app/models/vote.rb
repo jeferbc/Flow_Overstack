@@ -24,8 +24,16 @@ class Vote < ApplicationRecord
     if votes.find_by(user_id: user_id) == nil
       false
     else
-      votes = votes.find_by(user_id: user_id).destroy
+      true
     end
+  end
+  def self.destroy_vote?(user_id, id, method)
+    if method == "Question"
+      votes = Question.find(id).votes
+    else
+      votes = Answer.find(id).votes
+    end
+    votes.find_by(user_id: user_id).destroy 
   end
 
 

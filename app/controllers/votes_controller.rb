@@ -10,9 +10,11 @@ class VotesController < ApplicationController
         if @vote.save
         else
         end
+      else
+        Vote.destroy_vote?(current_user.id, params[:vote][:votable_id], params[:vote][:votable_type])
       end
     else
-      
+
     end
     redirect_to question_path(id: params[:question_id])
   end
