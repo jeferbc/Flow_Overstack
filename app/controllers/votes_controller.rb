@@ -4,9 +4,15 @@ class VotesController < ApplicationController
   # POST /comments
   # POST /comments.json
   def create
-    @vote = Vote.new(vote_params)
-    if @vote.save
+    if (user_signed_in?)
+      unless (Vote.already_vote?(current_user.id, params[:vote][:votable_id], params[:vote][:votable_type]))
+        @vote = Vote.new(vote_params)
+        if @vote.save
+        else
+        end
+      end
     else
+      
     end
     redirect_to question_path(id: params[:question_id])
   end

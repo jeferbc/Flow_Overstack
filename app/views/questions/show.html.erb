@@ -2,7 +2,6 @@
   <div class="row">
     <div class="col-md-10 col-md-offset-1">
       <div class="question-show">
-        <% if user_signed_in? %>
           <div class="panel-votes">
             <h3>
               <%= form_for(@vote) do |f| %>
@@ -10,7 +9,9 @@
                 <%= hidden_field_tag "vote[votable_id]", @question.id %>
                 <%= hidden_field_tag "vote[votable_type]", "Question" %>
                 <%= hidden_field_tag "question_id", @question.id %>
-                <%= hidden_field_tag "vote[user_id]", current_user.id %>
+                <% if user_signed_in? %>
+                  <%= hidden_field_tag "vote[user_id]", current_user.id %>
+                <% end %>
                 <%= button_tag type: 'submit', class: "fa fa-plus" do %>
                 <% end %>
               <% end %></h3>
@@ -21,19 +22,14 @@
                   <%= hidden_field_tag "vote[votable_id]", @question.id %>
                   <%= hidden_field_tag "vote[votable_type]", "Question" %>
                   <%= hidden_field_tag "question_id", @question.id %>
-                  <%= hidden_field_tag "vote[user_id]", current_user.id %>
+                  <% if user_signed_in? %>
+                    <%= hidden_field_tag "vote[user_id]", current_user.id %>
+                  <% end %>
                   <%= button_tag type: 'submit', class: "fa fa-minus" do %>
                   <% end %>
                 <% end %></h3>
           </div>
-        <%else  %>
-          <div class="votes-show">
-            <div class="mini-counts">
-              <span><%= @question.votes.size %></span>
-            </div>
-            <div>votes</div>
-          </div>
-        <% end %>
+
         <div class="question-panel">
           <p id="notice"><%= notice %></p>
           <div class="panel panel-default">
@@ -105,40 +101,35 @@
       <div class="row">
         <div class="col-md-10 col-md-offset-1">
           <div class="question-show">
-            <% if user_signed_in? %>
-              <div class="panel-votes">
-                <h3>
-                  <%= form_for(@vote) do |f| %>
-                  <%= hidden_field_tag "vote[amount]", true %>
-                  <%= hidden_field_tag "vote[votable_id]", answer.id %>
-                  <%= hidden_field_tag "vote[votable_type]", "Answer" %>
-                  <%= hidden_field_tag "question_id", @question.id %>
+            <div class="panel-votes">
+              <h3>
+                <%= form_for(@vote) do |f| %>
+                <%= hidden_field_tag "vote[amount]", true %>
+                <%= hidden_field_tag "vote[votable_id]", answer.id %>
+                <%= hidden_field_tag "vote[votable_type]", "Answer" %>
+                <%= hidden_field_tag "question_id", @question.id %>
+                <% if user_signed_in? %>
                   <%= hidden_field_tag "vote[user_id]", current_user.id %>
-                  <%= button_tag type: 'submit', class: "fa fa-plus" do %>
-                  <% end %>
-                  <% end %>
-                </h3>
-                <h3><%=answer.votes.where(:amount => true).count - answer.votes.where(:amount => false).count %></h3>
-                <h3>
-                  <%= form_for(@vote) do |f| %>
-                  <%= hidden_field_tag "vote[amount]", false %>
-                  <%= hidden_field_tag "vote[votable_id]", answer.id %>
-                  <%= hidden_field_tag "vote[votable_type]", "Answer" %>
-                  <%= hidden_field_tag "question_id", @question.id %>
+                <% end %>
+                <%= button_tag type: 'submit', class: "fa fa-plus" do %>
+                <% end %>
+                <% end %>
+              </h3>
+              <h3><%=answer.votes.where(:amount => true).count - answer.votes.where(:amount => false).count %></h3>
+              <h3>
+                <%= form_for(@vote) do |f| %>
+                <%= hidden_field_tag "vote[amount]", false %>
+                <%= hidden_field_tag "vote[votable_id]", answer.id %>
+                <%= hidden_field_tag "vote[votable_type]", "Answer" %>
+                <%= hidden_field_tag "question_id", @question.id %>
+                <% if user_signed_in? %>
                   <%= hidden_field_tag "vote[user_id]", current_user.id %>
-                  <%= button_tag type: 'submit', class: "fa fa-minus" do %>
-                  <% end %>
-                  <% end %>
-                </h3>
-              </div>
-            <% else %>
-              <div class="votes-show">
-                <div class="mini-counts">
-                  <span><%= @question.votes.size %></span>
-                </div>
-                <div>votes</div>
-              </div>
-            <% end %>
+                <% end %>
+                <%= button_tag type: 'submit', class: "fa fa-minus" do %>
+                <% end %>
+                <% end %>
+              </h3>
+            </div>
             <div class="question-panel">
               <div class="panel panel-default">
                 <div class="panel-heading">
