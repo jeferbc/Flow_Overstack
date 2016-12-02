@@ -3,19 +3,10 @@
   <meta property="og:url"                content="<%= "http://localhost:3000" + question_path(@question) %>" />
   <meta property="og:type"               content="article" />
   <meta property="og:title"              content="<%= @question.title %>" />
-  <meta property="og:description"        content="<%= @question.content.first(255) %>?" />
+  <meta property="og:description"        content="<%= @question.content.first(255) %>" />
   <meta property="og:image"              content="https://www.google.com.co/url?sa=i&rct=j&q=&esrc=s&source=images&cd=&cad=rja&uact=8&ved=0ahUKEwiijJSjz9TQAhXF5iYKHcRFCcgQjRwIBw&url=http%3A%2F%2Fwww.worcester.ac.uk%2Fcourses%2Fweb-development-bsc-hons.html&psig=AFQjCNG9RbG8mvMUonJbrxh6yV_kIqECmw&ust=1480737506713504" />
-<% end %>
-<!-- Load Facebook SDK for JavaScript -->
-	<div id="fb-root"></div>
-	<script>(function(d, s, id) {
-	  var js, fjs = d.getElementsByTagName(s)[0];
-	  if (d.getElementById(id)) return;
-	  js = d.createElement(s); js.id = id;
-	  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1";
-	  fjs.parentNode.insertBefore(js, fjs);
-	}(document, 'script', 'facebook-jssdk'));</script>
 
+<% end %>
 <div class="container">
   <div class="row">
     <div class="col-md-10 col-md-offset-1">
@@ -56,7 +47,7 @@
           <div class="question-panel">
             <div class="panel panel-default">
               <div class="panel-heading">
-                <h3 class="panel-title"><%= @question.title %><i class="" aria-hidden="true"><div class="fb-share-button" data-href= <%="http://localhost:3000"+question_path(@question) %> data-layout="button_count" data-size="small" data-mobile-iframe="true"><a class="fb-xfbml-parse-ignore" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse">Share</a></div></i></h3>
+                <h3 class="panel-title"><%= @question.title %><i class="" aria-hidden="true"></i></h3>
                 <% if user_signed_in? && current_user.id == User.find(@question.user_id).id  %>
                   <h3 class="panel-title-right"><%= link_to "", edit_question_path(@question), class: 'fa fa-pencil-square-o' %></h3>
                   <h3 class="panel-title-right"><%= link_to '', question_path(question_id: @question.id), class: 'fa fa-trash', method: :delete, data: { confirm: 'Are you sure?' }  %></h3>
@@ -64,6 +55,7 @@
               </div>
               <div class="panel-body">
               <p class="question-content"><%= @question.content %></p>
+              <%= social_share_button_tag(@question.title, :url => "http://localhost:3000#{question_path(@question)}", :image => "https://www.google.com.co/url?sa=i&rct=j&q=&esrc=s&source=images&cd=&cad=rja&uact=8&ved=0ahUKEwiijJSjz9TQAhXF5iYKHcRFCcgQjRwIBw&url=http%3A%2F%2Fwww.worcester.ac.uk%2Fcourses%2Fweb-development-bsc-hons.html&psig=AFQjCNG9RbG8mvMUonJbrxh6yV_kIqECmw&ust=1480737506713504",desc: "@question.content.first(255)", :popup => "true") %>
               </div>
             </div>
           </div>

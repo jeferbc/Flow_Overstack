@@ -34,6 +34,8 @@ gem "font-awesome-rails"
 gem 'therubyracer'
 gem 'devise'
 gem 'omniauth-facebook'
+#share button for social networks
+gem 'social-share-button', '~> 0.1.8'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
