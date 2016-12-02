@@ -31,4 +31,5 @@ class VotesController < ApplicationController
     def vote_params
       params.require(:vote).permit(:amount, :votable_id, :votable_type, :user_id)
     end
+    
 end
