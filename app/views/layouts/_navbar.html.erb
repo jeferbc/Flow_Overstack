@@ -14,15 +14,13 @@
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav navbar-right">
-        <form class="navbar-form navbar-left">
-          <%= search_form_for @search do |f| %>
-            <div class="form-group"><%= f.text_field :title_or_content_cont, class:'form-control',placeholder:"Search" %></div>
+          <%= search_form_for(@search, url: questions_path, html: { class: 'navbar-form navbar-left' }) do |f| %>
+            <div class="form-group"> <%= f.search_field :title_or_content_cont, class: 'form-control', placeholder: 'Search' %></div>
             <div class="actions">
               <%= button_tag type: 'submit', class: "glyphicon glyphicon-search" do %>
               <% end %>
             </div>
           <% end %>
-        </form>
         <% if user_signed_in? %>
           <li><%= link_to '', new_question_path, class:'fa fa-plus' %></li>
           <li class="dropdown">

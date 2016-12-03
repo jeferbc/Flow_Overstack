@@ -1,7 +1,7 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
-  before_filter :get_random_quote
-def get_random_quote
-    @search = Question.search(params[:q])
-end
+  before_action :create_ransack_object
+  def create_ransack_object
+      @search = Question.ransack(params[:q])
+  end
 end
