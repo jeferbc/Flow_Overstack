@@ -1,9 +1,14 @@
 class QuestionsController < ApplicationController
-  before_action :set_question, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_user!, only: [:new, :update, :detroy]
+  before_action :set_question, only: [:show, :edit, :update, :destroy]
+  before_action :set_ransack
 
   def index
-    @questions = Question.all
+    if params[:q].present?
+      @questions = @search.result
+    else
+      @questions = Question.all
+    end
   end
 
   def show
@@ -52,6 +57,9 @@ class QuestionsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_question
       @question = Question.find(params[:id])
+    end
+    def set_ransack
+      @search = Question.search(params[:q])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

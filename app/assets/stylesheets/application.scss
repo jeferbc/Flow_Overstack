@@ -39,3 +39,16 @@
   background-size: contain;
   margin-top: 10px;
 }
+@media (min-width: 768px){
+.navbar-left {
+    float: left !important;
+    display: inline-flex;
+}
+}
+.glyphicon {
+    top: 10px;
+    background: none;
+    color: gray;
+    margin-left: -29px;
+    border: none;
+}
