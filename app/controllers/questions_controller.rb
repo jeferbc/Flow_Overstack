@@ -29,14 +29,16 @@ class QuestionsController < ApplicationController
     if @question.save
       redirect_to question_path(id: @question.id)
     else
-      flash[:alert] = "The Question hasn't been created, due a system error"
+      flash[:alert] = "The Question hasn't been created, due an error"
+      render :new
     end
   end
+
   def update
     if @question.update(question_params)
       redirect_to question_path
     else
-      flash[:alert] = "The Question hasn't been edited, due a system error"
+      flash[:alert] = "The Question hasn't been edited, due an error"
     end
   end
 
