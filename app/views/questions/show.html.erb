@@ -1,3 +1,10 @@
+<% content_for :head do %>
+  <meta property="fb:app_id" content="212950962480498" />
+  <meta property="og:type"   content="article" />
+  <meta property="og:url"    content="<%= "flow-overstack.herokuapp.com" + question_path(@question) %>" />
+  <meta property="og:title"  content="<%= @question.title %>" />
+  <meta property="og:image"  content="https://fbstatic-a.akamaihd.net/images/devsite/attachment_blank.png" />
+<% end %>
 <div class="container">
   <div class="row">
     <div class="col-md-10 col-md-offset-1">
@@ -46,7 +53,7 @@
               </div>
               <div class="panel-body">
               <p class="question-content"><%= markdown(@question.content) %></p>
-              <%= social_share_button_tag(@question.title, :url => "http://localhost:3000#{question_path(@question)}", :image => "https://www.google.com.co/url?sa=i&rct=j&q=&esrc=s&source=images&cd=&cad=rja&uact=8&ved=0ahUKEwiijJSjz9TQAhXF5iYKHcRFCcgQjRwIBw&url=http%3A%2F%2Fwww.worcester.ac.uk%2Fcourses%2Fweb-development-bsc-hons.html&psig=AFQjCNG9RbG8mvMUonJbrxh6yV_kIqECmw&ust=1480737506713504",desc: "@question.content.first(255)", :popup => "true") %>
+              <%= social_share_button_tag %>
               </div>
             </div>
           </div>
