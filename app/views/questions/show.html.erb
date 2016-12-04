@@ -6,6 +6,16 @@
   <meta property="og:description"        content="<%= @question.content.first(255) %>" />
   <meta property="og:image"              content="http://i558.photobucket.com/albums/ss29/Jefferson_Bernal_Cardona/programador_zpsilox3uwn.jpg" />
 <% end %>
+<!-- Load Facebook SDK for JavaScript -->
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.8&appId=212950962480498";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
 <div class="container">
   <div class="row">
     <div class="col-md-10 col-md-offset-1">
@@ -47,6 +57,7 @@
             <div class="panel panel-default">
               <div class="panel-heading">
                 <h3 class="panel-title"><%= @question.title %><i class="" aria-hidden="true"></i></h3>
+                <div class="fb-share-button" data-href=<%="http://flow-overstack.herokuapp.com" + question_path(@question) %> data-layout="button" data-size="small" data-mobile-iframe="true"><a class="fb-xfbml-parse-ignore" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse">Share</a></div>
                 <% if user_signed_in? && current_user.id == User.find(@question.user_id).id  %>
                   <h3 class="panel-title-right"><%= link_to "", edit_question_path(@question), class: 'fa fa-pencil-square-o' %></h3>
                   <h3 class="panel-title-right"><%= link_to '', question_path(question_id: @question.id), class: 'fa fa-trash', method: :delete, data: { confirm: 'Are you sure?' }  %></h3>
