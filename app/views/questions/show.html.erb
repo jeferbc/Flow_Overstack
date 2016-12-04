@@ -1,11 +1,11 @@
-+<% content_for :head do %>
- +  <meta property="fb:app_id"             content="212950962480498">
- +  <meta property="og:url"                content="<%= "http://flow-overstack.herokuapp.com/" + question_path(@question) %>" />
- +  <meta property="og:type"               content="article" />
- +  <meta property="og:title"              content="<%= @question.title %>" />
- +  <meta property="og:description"        content="<%= @question.content.first(255) %>?" />
- +  <meta property="og:image"              content="http://i558.photobucket.com/albums/ss29/Jefferson_Bernal_Cardona/programador_zpsilox3uwn.jpg" />
- +<% end %>
+<% content_for :head do %>
+  <meta property="fb:app_id"             content="212950962480498">
+  <meta property="og:url"                content="<%= "http://flow-overstack.herokuapp.com/"  question_path(@question) %>" />
+  <meta property="og:type"               content="article" />
+  <meta property="og:title"              content="<%= @question.title %>" />
+  <meta property="og:description"        content="<%= @question.content.first(255) %>?" />
+  <meta property="og:image"              content="http://i558.photobucket.com/albums/ss29/Jefferson_Bernal_Cardona/programador_zpsilox3uwn.jpg" />
+<% end %>
 <div class="container">
   <div class="row">
     <div class="col-md-10 col-md-offset-1">
