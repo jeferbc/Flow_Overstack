@@ -23,11 +23,13 @@
             </div>
           </div>
           <div class="summary">
-            <div class="title">
-              <%= link_to "#{question.title}", question %>
-            </div>
-            <div class="info">
-              <%= link_to "#{User.find(question.user_id).email.split('@')[0]}, hace #{time_ago_in_words(question.created_at)}" , question %>
+            <div data-turbolinks="false">
+              <div class="title">
+                <%= link_to "#{question.title}", question %>
+              </div>
+              <div class="info">
+                <%= link_to "#{User.find(question.user_id).email.split('@')[0]}, hace #{time_ago_in_words(question.created_at)}" , question %>
+              </div>
             </div>
           </div>
           <% if user_signed_in? && current_user.id == User.find(question.user_id).id  %>
