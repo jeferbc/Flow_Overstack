@@ -1,6 +1,6 @@
 <% content_for :head do %>
   <meta property="fb:app_id"             content="212950962480498">
-  <meta property="og:url"                content="<%= "http://flow-overstack.herokuapp.com/"  question_path(@question) %>" />
+  <meta property="og:url"                content="http://flow-overstack.herokuapp.com/<%question_path(@question)%>" />
   <meta property="og:type"               content="article" />
   <meta property="og:title"              content="<%= @question.title %>" />
   <meta property="og:description"        content="<%= @question.content.first(255) %>?" />
