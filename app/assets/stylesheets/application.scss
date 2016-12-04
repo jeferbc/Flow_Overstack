@@ -11,7 +11,6 @@
  * It is generally better to create a new file per style scope.
  *
  *= require_tree
- *= require social-share-button
  *= require_self
  */
 @import "bootstrap-sprockets";
@@ -30,14 +29,6 @@
   z-index: 100;
   margin-top: -20px;
 
-}
-.social-share-button-facebook {
-  display: inline-block;
-  width: 80px;
-  height: 40px;
-  background: url(asset-path("fb-share.png")) no-repeat;
-  background-size: contain;
-  margin-top: 10px;
 }
 @media (min-width: 768px){
 .navbar-left {
