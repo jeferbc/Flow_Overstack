@@ -18,7 +18,9 @@ class VotesController < ApplicationController
     else
       flash[:alert] = "You must been logged in order to vote"
     end
-    redirect_to question_path(id: params[:question_id])
+    respond_to do |f|
+      f.html {redirect_to question_path(id: params[:question_id])}
+    end
   end
 
   private
@@ -31,5 +33,5 @@ class VotesController < ApplicationController
     def vote_params
       params.require(:vote).permit(:amount, :votable_id, :votable_type, :user_id)
     end
-    
+
 end

@@ -27,7 +27,7 @@ $(document).ready(function (){
       <div class="question-show">
           <div class="panel-votes">
             <h3>
-              <%= form_for(@vote) do |f| %>
+              <%= form_for(@vote, remote: true) do |f| %>
                 <%= hidden_field_tag "vote[amount]", true %>
                 <%= hidden_field_tag "vote[votable_id]", @question.id %>
                 <%= hidden_field_tag "vote[votable_type]", "Question" %>
@@ -35,7 +35,7 @@ $(document).ready(function (){
                 <% if user_signed_in? %>
                   <%= hidden_field_tag "vote[user_id]", current_user.id %>
                 <% end %>
-                <%= button_tag type: 'submit', class: "fa fa-plus" do %>
+                <%= button_tag type: 'submit', class: "fa fa-plus",id: "plus-vote" do %>
                 <% end %>
               <% end %>
             </h3>
@@ -45,7 +45,7 @@ $(document).ready(function (){
               <h3><%=@question.votes.where(:amount => true).count - @question.votes.where(:amount => false).count %></h3>
             <% end %>
             <h3>
-              <%= form_for(@vote) do |f| %>
+              <%= form_for(@vote, remote: true) do |f| %>
                 <%= hidden_field_tag "vote[amount]", false %>
                 <%= hidden_field_tag "vote[votable_id]", @question.id %>
                 <%= hidden_field_tag "vote[votable_type]", "Question" %>
@@ -53,7 +53,7 @@ $(document).ready(function (){
                 <% if user_signed_in? %>
                   <%= hidden_field_tag "vote[user_id]", current_user.id %>
                 <% end %>
-                <%= button_tag type: 'submit', class: "fa fa-minus" do %>
+                <%= button_tag type: 'submit', class: "fa fa-minus", id: "minus-vote" do %>
                 <% end %>
               <% end %>
             </h3>
@@ -85,7 +85,7 @@ $(document).ready(function (){
             <br><br>
             <div class="collapse" id="collapseExample">
               <div class="well">
-                <%= form_for(@comment) do |f| %>
+                <%= form_for(@comment, remote: true) do |f| %>
                   <div class="form-group">
                     <%= f.text_area :content, class:"form-control" %>
                   </div>
@@ -132,7 +132,7 @@ $(document).ready(function (){
           <div class="question-show">
             <div class="panel-votes">
               <h3>
-                <%= form_for(@vote) do |f| %>
+                <%= form_for(@vote, remote: true) do |f| %>
                   <%= hidden_field_tag "vote[amount]", true %>
                   <%= hidden_field_tag "vote[votable_id]", answer.id %>
                   <%= hidden_field_tag "vote[votable_type]", "Answer" %>
@@ -150,7 +150,7 @@ $(document).ready(function (){
                 <h3><%=answer.votes.where(:amount => true).count - answer.votes.where(:amount => false).count %></h3>
               <% end %>
               <h3>
-                <%= form_for(@vote) do |f| %>
+                <%= form_for(@vote, remote: true) do |f| %>
                 <%= hidden_field_tag "vote[amount]", false %>
                 <%= hidden_field_tag "vote[votable_id]", answer.id %>
                 <%= hidden_field_tag "vote[votable_type]", "Answer" %>
@@ -187,7 +187,7 @@ $(document).ready(function (){
             <br><br>
             <div class="collapse" id="collapseExample<%= answer.id %>">
               <div class="well">
-                <%= form_for(@comment) do |f| %>
+                <%= form_for(@comment, remote: true) do |f| %>
                 <div class="form-group">
                   <%= f.text_area :content, class:"form-control" %>
                 </div>
