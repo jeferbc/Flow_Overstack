@@ -16,6 +16,27 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
 @import "font-awesome";
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    margin: 0 0 100px; /* bottom = footer height */
+}
+
+footer {
+    background-color: #333;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    padding: 17px 0;
+    text-align: center;
+    width: 100%;
+    overflow:hidden;
+    color: #ccc;
+    border-top: solid 1px #555;
+}
 
 .success{
   color: green;
