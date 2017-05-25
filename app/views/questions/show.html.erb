@@ -70,7 +70,6 @@ $(document).ready(function (){
               </div>
               <div class="panel-body">
                 <p class="question-content"><%= markdown(@question.content) %></p>
-
               </div>
             </div>
           </div>
@@ -85,34 +84,13 @@ $(document).ready(function (){
             <br><br>
             <div class="collapse" id="collapseExample">
               <div class="well">
-                <%= form_for(@comment, remote: true) do |f| %>
-                  <div class="form-group">
-                    <%= f.text_area :content, class:"form-control" %>
-                  </div>
-                  <%= hidden_field_tag "comment[commentable_id]", @question.id %>
-                  <%= hidden_field_tag "comment[commentable_type]", "Question" %>
-                  <%= hidden_field_tag "question_id",@question.id %>
-                  <%= hidden_field_tag "comment[user_id]", current_user.id %>
-                  <div class="actions">
-                    <%= f.submit 'Coment', class: "btn btn-success" %>
-                  </div>
-                <% end %>
+                <%= render 'comments/form', commentable: @question %>
               </div>
             </div>
           <% end %>
-          <% @comments.each do |comment| %>
-            <div class="panel panel-default">
-              <div class="comment">
-                <p><%= "#{User.find(comment.user_id).email.split('@')[0]}, hace #{time_ago_in_words(comment.created_at)}" %></p>
-                <% if user_signed_in? && current_user.id == User.find(comment.user_id).id  %>
-                <h3 class="panel-title-right"><%= link_to '', comment_path(question_id: @question.id, id: comment.id), class: 'fa fa-trash', method: :delete, data: { confirm: 'Are you sure?' }  %></h3>
-                <% end %>
-              </div>
-              <div class="panel-body">
-                <p class="content"><%= markdown(comment.content) %></p>
-              </div>
-            </div>
-          <% end %>
+          <div class="comments-list">
+            <%= render @question.comments.order('created_at') %>
+          </div>
         </div>
       </div>
     </div>
@@ -121,12 +99,12 @@ $(document).ready(function (){
         <h4 class="text-center"><%="#{@question.answers.size} Respuesta(s)" %></h4>
         <% if user_signed_in? %>
           <div class="panel-title-right">
-            <%= link_to 'Crear Respuesta', new_answer_path(question_id: @question.id) %>
+            <%= link_to 'Crear Respuesta', new_question_answer_path(question_id: @question.id) %>
           </div>
         <% end %>
       </div>
     </div>
-    <% @answers.each do |answer| %>
+    <% @question.answers.each do |answer| %>
       <div class="row">
         <div class="col-md-10 col-md-offset-1">
           <div class="question-show">
@@ -151,15 +129,15 @@ $(document).ready(function (){
               <% end %>
               <h3>
                 <%= form_for(@vote, remote: true) do |f| %>
-                <%= hidden_field_tag "vote[amount]", false %>
-                <%= hidden_field_tag "vote[votable_id]", answer.id %>
-                <%= hidden_field_tag "vote[votable_type]", "Answer" %>
-                <%= hidden_field_tag "question_id", @question.id %>
-                <% if user_signed_in? %>
-                  <%= hidden_field_tag "vote[user_id]", current_user.id %>
-                <% end %>
-                <%= button_tag type: 'submit', class: "fa fa-minus" do %>
-                <% end %>
+                  <%= hidden_field_tag "vote[amount]", false %>
+                  <%= hidden_field_tag "vote[votable_id]", answer.id %>
+                  <%= hidden_field_tag "vote[votable_type]", "Answer" %>
+                  <%= hidden_field_tag "question_id", @question.id %>
+                  <% if user_signed_in? %>
+                    <%= hidden_field_tag "vote[user_id]", current_user.id %>
+                  <% end %>
+                  <%= button_tag type: 'submit', class: "fa fa-minus" do %>
+                  <% end %>
                 <% end %>
               </h3>
             </div>
@@ -187,34 +165,13 @@ $(document).ready(function (){
             <br><br>
             <div class="collapse" id="collapseExample<%= answer.id %>">
               <div class="well">
-                <%= form_for(@comment, remote: true) do |f| %>
-                <div class="form-group">
-                  <%= f.text_area :content, class:"form-control" %>
-                </div>
-                <%= hidden_field_tag "comment[commentable_id]", answer.id %>
-                <%= hidden_field_tag "comment[commentable_type]", "Answer" %>
-                <%= hidden_field_tag "question_id", @question.id %>
-                <%= hidden_field_tag "comment[user_id]", current_user.id %>
-                <div class="actions">
-                  <%= f.submit 'Coment', class: "btn btn-success" %>
-                </div>
-                <% end %>
+                <%= render 'comments/form', commentable: answer %>
               </div>
             </div>
           <% end %>
-          <% answer.comments.each do |comment| %>
-          <div class="panel panel-default">
-            <div class="comment">
-              <p><%= "#{User.find(comment.user_id).email.split('@')[0]}, hace #{time_ago_in_words(comment.created_at)}" %></p>
-              <% if user_signed_in? && current_user.id == User.find(comment.user_id).id  %>
-                <h3 class="panel-title-right"><%= link_to '', comment_path(question_id: @question.id, id: comment.id), class:'fa fa-trash', method: :delete, data: { confirm: 'Are you sure?' }  %></h3>
-              <% end %>
-            </div>
-            <div class="panel-body">
-              <p class="content"><%= comment.content %></p>
-            </div>
+          <div class="comments-list">
+            <%= render answer.comments.order('created_at') %>
           </div>
-          <% end %>
         </div>
       </div>
   <% end %>

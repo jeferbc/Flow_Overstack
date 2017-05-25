@@ -1,0 +1,4 @@
+<% if @comment.errors.empty?  %>
+  $('.comments-list').append(' <%= j render "comments/comment", comment: @comment %>')
+  $('#comment_content').val("")
+<% end %>

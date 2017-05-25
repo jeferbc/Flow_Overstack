@@ -1,8 +1,5 @@
 class VotesController < ApplicationController
 
-
-  # POST /comments
-  # POST /comments.json
   def create
     if (user_signed_in?)
       unless (Vote.already_vote?(current_user.id, params[:vote][:votable_id], params[:vote][:votable_type]))

@@ -29,17 +29,18 @@ gem 'hirb'
 gem 'annotate'
 gem 'bootstrap-sass', '~> 3.3.6'
 gem "font-awesome-rails"
-#Gems for autentication
+# Gems for autentication
 gem 'therubyracer'
 gem 'devise'
 gem 'omniauth-facebook'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
-#for markdown
+# for markdown
 gem 'redcarpet', '~> 3.0.0'
-#Use for search
+# Use for search
 gem 'ransack'
+gem 'faker'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

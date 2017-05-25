@@ -12,12 +12,10 @@ class QuestionsController < ApplicationController
   end
 
   def show
-      @answers = @question.answers
       @comment = Comment.new
       @comments = @question.comments
       @vote = Vote.new
       @votes = @question.votes.count
-  
   end
 
   # GET /questions/new
