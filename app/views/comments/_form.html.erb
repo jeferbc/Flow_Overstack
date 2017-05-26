@@ -1,4 +1,4 @@
-<%= form_for([commentable, Comment.new],  remote: true) do |f| %>
+<%= form_for([comment.commentable, comment],  remote: true) do |f| %>
   <div class="form-group">
     <%= f.text_area :content, class:"form-control", placeholder: "Add a comment" %>
   </div>

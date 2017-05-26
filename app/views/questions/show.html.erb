@@ -84,12 +84,12 @@ $(document).ready(function (){
             <br><br>
             <div class="collapse" id="collapseExample">
               <div class="well">
-                <%= render 'comments/form', commentable: @question %>
+                <%= render 'comments/form', comment: @question.comments.build %>
               </div>
             </div>
           <% end %>
           <div class="comments-list">
-            <%= render @question.comments.order('created_at') %>
+            <%= render @question.comments.order('created_at'), commentable: @question %>
           </div>
         </div>
       </div>
@@ -165,12 +165,13 @@ $(document).ready(function (){
             <br><br>
             <div class="collapse" id="collapseExample<%= answer.id %>">
               <div class="well">
-                <%= render 'comments/form', commentable: answer %>
+                <%= console %>
+                <%= render 'comments/form', comment: answer.comments.build  %>
               </div>
             </div>
           <% end %>
           <div class="comments-list">
-            <%= render answer.comments.order('created_at') %>
+            <%= render answer.comments.order('created_at'), commentable: answer %>
           </div>
         </div>
       </div>

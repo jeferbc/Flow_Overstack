@@ -1,4 +1,5 @@
 class CommentsController < ApplicationController
+  before_action :set_comment, only: [:edit, :destroy, :update]
 
   def create
     @comment = @commentable.comments.new(comment_params)
@@ -8,7 +9,10 @@ class CommentsController < ApplicationController
     else
       flash[:alert] = "The comment hasn't been created, due a system error"
     end
-    render 'questions/create.js'
+    render 'comments/create.js'
+  end
+
+  def edit
   end
 
   def update
@@ -17,7 +21,7 @@ class CommentsController < ApplicationController
     else
       flash[:alert] = "The comment hasn't been edited, due a system error"
     end
-    redirect_to question_path(id: params[:question_id])
+    render 'comments/update.js'
   end
 
   def destroy
