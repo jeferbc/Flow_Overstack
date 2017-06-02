@@ -32,7 +32,8 @@ $(document).ready(function (){
     </div>
     <div class="row">
       <div class="col-sm-1">
-        <%= render 'votes/votes_panel', { votable: @question, path_up: question_votes_path(@question, liked: true), path_down: question_votes_path(@question, liked: false) } %>
+        <%= render 'votes/votes_panel', { votable: @question, path_up: question_votes_path(@question, liked: true),
+          path_down: question_votes_path(@question, liked: false) } %>
       </div>
       <div class="col-sm-9">
         <div class="question-body">
@@ -40,7 +41,8 @@ $(document).ready(function (){
         </div>
       </div>
       <div class="col-sm-2">
-        <%= render 'info_panel', data: @question %>
+        <%= render 'info_panel', { data: @question, question: @question,
+          path_edit: edit_question_path(@question), path_delete: question_path(@question) } %>
       </div>
     </div>
     <div class="row">
@@ -59,39 +61,13 @@ $(document).ready(function (){
     <h4 class="text-center"><%="#{@question.answers.size} Respuesta(s)" %></h4>
       <div class="answers-list">
         <% @question.answers.each do |answer| %>
-          <div class="answer">
-            <div class="row">
-              <div class="col-sm-1">
-                <%= render 'votes/votes_panel', { votable: answer, path_up: question_answer_votes_path(@question, answer, liked: true), path_down: question_answer_votes_path(@question, answer, liked: false) } %>
-              </div>
-              <div class="col-sm-9">
-                <%= render 'answers/answer', answer: answer %>
-              </div>
-              <div class="col-sm-2">
-                <%= render 'info_panel', data: answer %>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-sm-9 col-sm-offset-1">
-                <% if user_signed_in? %>
-                  <%= render 'comments/add_comment', { path: [@question, answer, Comment.new], commentable: answer } %>
-                <% end %>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-sm-9 col-sm-offset-1">
-                <div class="comment-list">
-                  <%= render 'comment_list', commentable: answer %>
-                </div>
-              </div>
-            </div>
-          </div>
+          <%= render 'answer_panel', { answer: answer, question: @question } %>
         <% end %>
       </div>
       <div class="col-sm-9 col-sm-offset-1">
         <div class="row">
           <% if user_signed_in? %>
-            <%= render 'answers/form', answer: @question.answers.build%>
+            <%= render 'answers/form', answer: @question.answers.build %>
           <% end %>
         </div>
       </div>

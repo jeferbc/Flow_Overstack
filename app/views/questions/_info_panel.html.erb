@@ -16,12 +16,12 @@
     <% end %>
     <tr>
       <td class="actions">
-        <div class="fb-share-button" data-href=<%="http://flow-overstack.herokuapp.com" + question_path(@question) %> data-layout="button" data-size="small" data-mobile-iframe="true">
+        <div class="fb-share-button" data-href=<%="http://flow-overstack.herokuapp.com" + question_path(question) %> data-layout="button" data-size="small" data-mobile-iframe="true">
           <a class="fb-xfbml-parse-ignore" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse">Share</a>
         </div>
         <% if user_signed_in? && current_user == data.user  %>
-          <h3 class="icons"><%= link_to "", edit_question_path(data), class: 'fa fa-pencil-square-o' %></h3>
-          <h3 class="icons"><%= link_to "", question_path(question_id: data.id), class: 'fa fa-trash', method: :delete, data: { confirm: 'Are you sure?' }  %></h3>
+          <h3 class="icons"><%= link_to "", path_edit, class: 'fa fa-pencil-square-o', remote: true %></h3>
+          <h3 class="icons"><%= link_to "", path_delete, class: 'fa fa-trash', method: :delete, remote: true, data: { confirm: 'Are you sure?' }  %></h3>
         <% end %>
       </td>
     </tr>

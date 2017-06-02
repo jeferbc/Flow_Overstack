@@ -1,1 +1,1 @@
-$("#total-votes-<%= @votable.id %>").text(<%= @votes %>);
+$("#total-votes-<%= @votable.class.name %>-<%= @votable.id %>").text(<%= @votes %>);
