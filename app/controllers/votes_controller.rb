@@ -3,6 +3,7 @@ class VotesController < ApplicationController
   def create
     @vote = @votable.votes.new(vote_params)
     @vote.user = current_user
+    @vote.save
     @votes = @vote.calculate_votes(@votable)
   end
 
