@@ -23,7 +23,7 @@ $(document).ready(function (){
 <div class="container question-show">
   <div class="col-sm-12">
     <div class="row">
-      <div class="col-sm-12 col-sm-offset-1">
+      <div class="col-sm-11 col-sm-offset-1">
         <div class="subheader">
           <div class="question-header"><h2><%= @question.title.humanize %></h2></div>
           <%= link_to 'Ask Question', new_question_path, class:"btn btn-primary btn-sm" %>
@@ -55,6 +55,7 @@ $(document).ready(function (){
         <div class="comment-list">
           <%= render 'comment_list', commentable: @question %>
         </div>
+      </div>
     </div>
   </div>
   <div class="col-sm-12">
