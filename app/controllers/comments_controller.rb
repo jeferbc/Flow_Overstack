@@ -4,29 +4,25 @@ class CommentsController < ApplicationController
   def create
     @comment = @commentable.comments.new(comment_params)
     @comment.user = current_user
-    if @comment.save
-      flash[:notice] = "Your comment was successfuly posted."
-    else
-      flash[:alert] = "The comment hasn't been created, due a system error"
-    end
+    @comment.save
     render 'comments/create.js'
   end
 
   def edit
+    if @commentable.kind_of?(Question)
+      @path = [@commentable, @comment]
+    else
+      @path = [@commentable.question, @commentable, @comment]
+    end
   end
 
   def update
-    if @comment.update(comment_params)
-      flash[:notice] = "Your comment was successfuly edited."
-    else
-      flash[:alert] = "The comment hasn't been edited, due a system error"
-    end
+    @comment.update(comment_params)
     render 'comments/update.js'
   end
 
   def destroy
     @comment.destroy
-    redirect_to question_path(id: params[:question_id])
   end
 
   private

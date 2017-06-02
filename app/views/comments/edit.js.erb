@@ -1,1 +1,1 @@
-$("#<%= @comment.id %>").replaceWith("<%= j render 'comments/form', comment: @comment %>");
+$("#<%= @comment.id %>").replaceWith("<%= j render 'comments/form', { path: @path, commentable: @commentable } %>");
