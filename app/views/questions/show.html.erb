@@ -20,160 +20,81 @@ $(document).ready(function (){
     }(document, 'script', 'facebook-jssdk'));
 });
 </script>
-
-<div class="container">
-  <div class="row">
-    <div class="col-md-10 col-md-offset-1">
-      <div class="question-show">
-          <div class="panel-votes">
-            <h3>
-              <%= form_for(@vote, remote: true) do |f| %>
-                <%= hidden_field_tag "vote[amount]", true %>
-                <%= hidden_field_tag "vote[votable_id]", @question.id %>
-                <%= hidden_field_tag "vote[votable_type]", "Question" %>
-                <%= hidden_field_tag "question_id", @question.id %>
-                <% if user_signed_in? %>
-                  <%= hidden_field_tag "vote[user_id]", current_user.id %>
-                <% end %>
-                <%= button_tag type: 'submit', class: "fa fa-plus",id: "plus-vote" do %>
-                <% end %>
-              <% end %>
-            </h3>
-            <% if (user_signed_in? && Vote.already_vote?(current_user.id, @question.id,"Question")) %>
-              <h3 class= <%= @question.votes.where(:amount => true).count - @question.votes.where(:amount => false).count >= 0 ? 'success' : 'danger'; %>><%=@question.votes.where(:amount => true).count - @question.votes.where(:amount => false).count %></h3>
-            <% else %>
-              <h3><%=@question.votes.where(:amount => true).count - @question.votes.where(:amount => false).count %></h3>
-            <% end %>
-            <h3>
-              <%= form_for(@vote, remote: true) do |f| %>
-                <%= hidden_field_tag "vote[amount]", false %>
-                <%= hidden_field_tag "vote[votable_id]", @question.id %>
-                <%= hidden_field_tag "vote[votable_type]", "Question" %>
-                <%= hidden_field_tag "question_id", @question.id %>
-                <% if user_signed_in? %>
-                  <%= hidden_field_tag "vote[user_id]", current_user.id %>
-                <% end %>
-                <%= button_tag type: 'submit', class: "fa fa-minus", id: "minus-vote" do %>
-                <% end %>
-              <% end %>
-            </h3>
-          </div>
-          <div class="question-panel">
-            <div class="panel panel-default">
-              <div class="panel-heading">
-                <h3 class="panel-title"><%= @question.title %><i class="" aria-hidden="true"></i></h3>
-                <div class="fb-share-button" data-href=<%="http://flow-overstack.herokuapp.com" + question_path(@question) %> data-layout="button" data-size="small" data-mobile-iframe="true"><a class="fb-xfbml-parse-ignore" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse">Share</a></div>
-                <% if user_signed_in? && current_user.id == User.find(@question.user_id).id  %>
-                  <h3 class="panel-title-right"><%= link_to "", edit_question_path(@question), class: 'fa fa-pencil-square-o' %></h3>
-                  <h3 class="panel-title-right"><%= link_to '', question_path(question_id: @question.id), class: 'fa fa-trash', method: :delete, data: { confirm: 'Are you sure?' }  %></h3>
-                <% end %>
-              </div>
-              <div class="panel-body">
-                <p class="question-content"><%= markdown(@question.content) %></p>
-              </div>
-            </div>
-          </div>
+<div class="container question-show">
+  <div class="col-sm-12">
+    <div class="row">
+      <div class="col-sm-12 col-sm-offset-1">
+        <div class="subheader">
+          <div class="question-header"><h2><%= @question.title.humanize %></h2></div>
+          <%= link_to 'Ask Question', new_question_path, class:"btn btn-primary btn-sm" %>
         </div>
       </div>
     </div>
     <div class="row">
-      <div class="col-md-8 col-md-offset-2">
-        <div class="comment_section">
-          <% if user_signed_in? %>
-            <a class="btn btn-primary" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample">Add Coment</a>
-            <br><br>
-            <div class="collapse" id="collapseExample">
-              <div class="well">
-                <%= render 'comments/form', comment: @question.comments.build %>
-              </div>
-            </div>
-          <% end %>
-          <div class="comments-list">
-            <%= render @question.comments.order('created_at'), commentable: @question %>
-          </div>
+      <div class="col-sm-1">
+        <%= render 'votes/votes_panel', { votable: @question, path_up: question_votes_path(@question, liked: true), path_down: question_votes_path(@question, liked: false) } %>
+      </div>
+      <div class="col-sm-9">
+        <div class="question-body">
+          <%= markdown(@question.content) %>
         </div>
+      </div>
+      <div class="col-sm-2">
+        <%= render 'info_panel', data: @question %>
       </div>
     </div>
     <div class="row">
-      <div class="col-md-10 col-md-offset-1">
-        <h4 class="text-center"><%="#{@question.answers.size} Respuesta(s)" %></h4>
-        <% if user_signed_in? %>
-          <div class="panel-title-right">
-            <%= link_to 'Crear Respuesta', new_question_answer_path(question_id: @question.id) %>
+      <div class="col-sm-9 col-sm-offset-1">
+        <%= render 'comments/form', { path: [@question, Comment.new], commentable: @question } %>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-9 col-sm-offset-1">
+        <div class="comment-list">
+          <%= render 'comment_list', commentable: @question %>
+        </div>
+    </div>
+  </div>
+  <div class="col-sm-12">
+    <h4 class="text-center"><%="#{@question.answers.size} Respuesta(s)" %></h4>
+      <div class="answers-list">
+        <% @question.answers.each do |answer| %>
+          <div class="answer">
+            <div class="row">
+              <div class="col-sm-1">
+                <%= render 'votes/votes_panel', { votable: answer, path_up: question_answer_votes_path(@question, answer, liked: true), path_down: question_answer_votes_path(@question, answer, liked: false) } %>
+              </div>
+              <div class="col-sm-9">
+                <%= render 'answers/answer', answer: answer %>
+              </div>
+              <div class="col-sm-2">
+                <%= render 'info_panel', data: answer %>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-9 col-sm-offset-1">
+                <% if user_signed_in? %>
+                  <%= render 'comments/form', { path: [@question, answer, Comment.new], commentable: answer } %>
+                <% end %>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-9 col-sm-offset-1">
+                <div class="comment-list">
+                  <%= render 'comment_list', commentable: answer %>
+                </div>
+              </div>
+            </div>
           </div>
         <% end %>
       </div>
-    </div>
-    <% @question.answers.each do |answer| %>
-      <div class="row">
-        <div class="col-md-10 col-md-offset-1">
-          <div class="question-show">
-            <div class="panel-votes">
-              <h3>
-                <%= form_for(@vote, remote: true) do |f| %>
-                  <%= hidden_field_tag "vote[amount]", true %>
-                  <%= hidden_field_tag "vote[votable_id]", answer.id %>
-                  <%= hidden_field_tag "vote[votable_type]", "Answer" %>
-                  <%= hidden_field_tag "question_id", @question.id %>
-                  <% if user_signed_in? %>
-                    <%= hidden_field_tag "vote[user_id]", current_user.id %>
-                  <% end %>
-                  <%= button_tag type: 'submit', class: "fa fa-plus" do %>
-                  <% end %>
-                <% end %>
-              </h3>
-              <% if (user_signed_in? && Vote.already_vote?(current_user.id, answer.id,"Answer")) %>
-                <h3 class= <%= answer.votes.where(:amount => true).count - answer.votes.where(:amount => false).count >= 0 ? 'success' : 'danger'; %>><%=answer.votes.where(:amount => true).count - answer.votes.where(:amount => false).count %></h3>
-              <% else %>
-                <h3><%=answer.votes.where(:amount => true).count - answer.votes.where(:amount => false).count %></h3>
-              <% end %>
-              <h3>
-                <%= form_for(@vote, remote: true) do |f| %>
-                  <%= hidden_field_tag "vote[amount]", false %>
-                  <%= hidden_field_tag "vote[votable_id]", answer.id %>
-                  <%= hidden_field_tag "vote[votable_type]", "Answer" %>
-                  <%= hidden_field_tag "question_id", @question.id %>
-                  <% if user_signed_in? %>
-                    <%= hidden_field_tag "vote[user_id]", current_user.id %>
-                  <% end %>
-                  <%= button_tag type: 'submit', class: "fa fa-minus" do %>
-                  <% end %>
-                <% end %>
-              </h3>
-            </div>
-            <div class="question-panel">
-              <div class="panel panel-default">
-                <div class="comment">
-                  <p><%="#{User.find(answer.user_id).email.split('@')[0]}, hace #{time_ago_in_words(answer.created_at)}"%></p>
-                  <% if user_signed_in? && current_user.id == User.find(answer.user_id).id  %>
-                    <h3 class="panel-title-right"><%= link_to '', edit_answer_path(id: answer.id,question_id: @question.id), class:'fa fa-pencil-square-o' %></h3>
-                    <h3 class="panel-title-right"><%= link_to '', answer_path(question_id: @question.id, id: answer.id), class:'fa fa-trash', method: :delete, data: { confirm: 'Are you sure?' }  %></h3>
-                  <% end %>
-                </div>
-                <div class="panel-body">
-                  <p class="question-content"><%= markdown(answer.content) %></p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-8 col-md-offset-2">
+      <div class="col-sm-9 col-sm-offset-1">
+        <div class="row">
           <% if user_signed_in? %>
-            <a class="btn btn-primary" role="button" data-toggle="collapse" href="#collapseExample<%= answer.id %>" aria-expanded="false" aria-controls="collapseExample<%= answer.id %>">Add Coment</a>
-            <br><br>
-            <div class="collapse" id="collapseExample<%= answer.id %>">
-              <div class="well">
-                <%= console %>
-                <%= render 'comments/form', comment: answer.comments.build  %>
-              </div>
-            </div>
+            <%= render 'answers/form', answer: @question.answers.build%>
           <% end %>
-          <div class="comments-list">
-            <%= render answer.comments.order('created_at'), commentable: answer %>
-          </div>
         </div>
       </div>
-  <% end %>
+    </div>
+  </div>
 </div>
