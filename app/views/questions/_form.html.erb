@@ -18,11 +18,11 @@
 
   <div class="form-group">
     <%= f.label :content %>
-    <%= f.text_area :content, class: "form-control"%>
+    <%= f.text_area :content, class: "form-control", rows: 10 %>
   </div>
   <%= hidden_field_tag "question[user_id]", current_user.id %>
   <div class="actions">
     <%= f.submit 'Guardar', class:"btn btn-success" %>
-    <%= link_to 'Cancelar', questions_path, class: 'btn btn-danger' %>
+    <%= link_to 'Cancelar', questions_path, class: 'btn btn-primary btn-sm' %>
   </div>
 <% end %>

@@ -1,6 +1,6 @@
 class QuestionsController < ApplicationController
   before_action :authenticate_user!, only: [:new, :update, :detroy]
-  before_action :set_question, only: [:show, :edit, :update, :destroy]
+  before_action :set_question, only: [:show, :edit, :update, :destroy, :track_view]
   before_action :set_ransack
 
   def index
@@ -12,22 +12,15 @@ class QuestionsController < ApplicationController
   end
 
   def show
-      @comment = Comment.new
-      @comments = @question.comments
-      @vote = Vote.new
-      @votes = @question.votes.count
   end
 
-  # GET /questions/new
   def new
     @question = Question.new
   end
 
-  # GET /questions/1/edit
   def edit
   end
 
-  # POST /questions
   def create
     @question = Question.new(question_params)
     if @question.save
@@ -50,6 +43,11 @@ class QuestionsController < ApplicationController
   def destroy
     @question.destroy
     redirect_to questions_path
+  end
+
+  def track_view
+    @question.update(viewed: @question.viewed + 1)
+    redirect_to question_path(id: @question.id)
   end
 
   private

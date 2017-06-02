@@ -1,0 +1,27 @@
+<table class="table">
+  <tbody class="visible-comments-<%= commentable.class.name %>-<%= commentable.id %>">
+    <% commentable.comments.order('created_at DESC').limit(3).each do |comment| %>
+        <%= render comment, commentable: commentable %>
+    <% end %>
+  </tbody>
+  <% if commentable.comments.count > 3 %>
+    <tr class="more-comments-<%= commentable.id %>">
+      <td>
+        <a href="javascript:void(0)" data-toggle="collapse" data-target="#more-comments-<%= commentable.id %>" id="show-more">Show <%= commentable.comments.count - 3 %> more</a>
+      </td>
+    </tr>
+    <tbody class="collapse" id="more-comments-<%= commentable.id %>">
+      <% commentable.comments.order('created_at DESC').drop(3).each do |comment| %>
+        <%= render comment, commentable: commentable %>
+      <% end %>
+    </tbody>
+  <% end %>
+</table>
+
+<% if commentable.comments.count > 3 %>
+  <script type="text/javascript">
+  $(".more-comments-<%= commentable.id %>").on('click', function() {
+    $(".more-comments-<%= commentable.id %>").remove()
+  });
+  </script>
+<% end %>

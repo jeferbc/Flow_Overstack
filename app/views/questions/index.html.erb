@@ -11,21 +11,25 @@
             <tr>
               <td class="metric">
                 <span class="metric-value"><%= question.votes.count %></span>
-                <span class="metric-label">votes</span>
+                <span class="metric-label">Votes</span>
               </td>
               <td class="metric">
                 <span class="metric-value"><%= question.answers.count %></span>
-                <span class="metric-label">answers</span>
+                <span class="metric-label">Answers</span>
+              </td>
+              <td class="metric">
+                <span class="metric-value"><%= question.viewed %></span>
+                <span class="metric-label">Views</span>
               </td>
               <td class="question-info">
-                <span class="question-title"><%= link_to truncate(question.title.humanize, length: 150), question %></span>
-                <span class="question-details"><%= link_to "#{question.user.email.split('@')[0]}, hace #{time_ago_in_words(question.created_at)}" , question %></span>
+                <span class="question-title"><%= link_to truncate(question.title.humanize, length: 150), track_view_path(id: question.id), method: :put %></span>
+                <span class="question-details"><%= link_to "#{question.user.email.split('@')[0]}, #{time_ago_in_words(question.created_at)} ago" , question %></span>
               </td>
               <td>
-                <% if user_signed_in? && current_user.id == User.find(question.user_id).id  %>
-                  <div class="icons">
-                    <h3 class="panel-title-right"><%= link_to "", edit_question_path(question), class: 'fa fa-pencil-square-o' %></h3>
-                    <h3 class="panel-title-right"><%= link_to "", question_path(question), class: 'fa fa-trash', method: :delete, data: { confirm: 'Are you sure?' }  %></h3>
+                <% if user_signed_in? && current_user == question.user  %>
+                  <div class="actions">
+                    <h3 class="icons"><%= link_to "", edit_question_path(question), class: 'fa fa-pencil-square-o' %></h3>
+                    <h3 class="icons"><%= link_to "", question_path(question), class: 'fa fa-trash', method: :delete, data: { confirm: 'Are you sure?' }  %></h3>
                   </div>
                 <% end %>
               </td>
