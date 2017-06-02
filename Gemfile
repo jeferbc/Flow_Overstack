@@ -37,7 +37,8 @@ gem 'omniauth-facebook'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 # for markdown
-gem 'redcarpet', '~> 3.0.0'
+gem 'redcarpet'
+gem 'coderay'
 # Use for search
 gem 'ransack'
 gem 'faker'

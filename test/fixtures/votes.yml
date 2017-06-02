@@ -3,7 +3,7 @@
 # Table name: votes
 #
 #  id           :integer          not null, primary key
-#  amount       :boolean
+#  liked        :boolean
 #  votable_type :string
 #  votable_id   :integer
 #  user_id      :integer
@@ -14,11 +14,11 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  amount: 1
+  liked: 1
   votable: one
   votable_type: Votable
 
 two:
-  amount: 1
+  liked: 1
   votable: two
   votable_type: Votable
