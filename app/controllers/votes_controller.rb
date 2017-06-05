@@ -9,6 +9,7 @@ class VotesController < ApplicationController
 
   def destroy
     @vote = Vote.find(params[:id])
+    @vote.destroy
     @votes = @vote.calculate_votes(@votable)
   end
 

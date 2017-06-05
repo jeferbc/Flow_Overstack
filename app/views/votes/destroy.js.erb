@@ -1,2 +1,3 @@
-<h1>Votes#destroy</h1>
-<p>Find me in app/views/votes/destroy.html.erb</p>
+$("#total-votes-<%= @votable.class.name %>-<%= @votable.id %>").text(<%= @votes %>);
+$("#votes-<%= @vote.votable.class.name %>-<%= @vote.votable.id %>").replaceWith('<%= j render "votes_panel", { votable: @vote.votable, verb: :post, path_up: question_votes_path(@vote.votable, liked: true), path_down: question_votes_path(@vote.votable, liked: false) } %>');
+$("#votes-<%= @vote.votable.class.name %>-<%= @vote.votable.id %>").removeClass('already-vote')

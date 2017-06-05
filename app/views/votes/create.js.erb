@@ -1,1 +1,3 @@
 $("#total-votes-<%= @votable.class.name %>-<%= @votable.id %>").text(<%= @votes %>);
+$("#votes-<%= @vote.votable.class.name %>-<%= @vote.votable.id %>").replaceWith('<%= j render "votes_panel", { votable: @vote.votable, path_up: question_vote_path(@vote.votable, @vote), path_down: question_vote_path(@vote.votable, @vote), verb: :delete } %>');
+$("#votes-<%= @vote.votable.class.name %>-<%= @vote.votable.id %>").addClass('already-vote')

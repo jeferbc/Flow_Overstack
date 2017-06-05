@@ -1,5 +1,5 @@
-<div class="votes-cell">
-  <%= link_to '<span class="glyphicon glyphicon-triangle-top vote-icon" aria-hidden="true"></span> '.html_safe, path_up, remote: true, method: :post  %>
+<div class="votes-cell <%= 'already-vote' if verb == :delete  %>" id="votes-<%= votable.class.name %>-<%= votable.id %>">
+  <%= link_to '<span class="glyphicon glyphicon-triangle-top vote-icon" aria-hidden="true"></span> '.html_safe, path_up, method: verb, remote: true  %>
   <span class="total-votes" id="total-votes-<%= votable.class.name %>-<%= votable.id %>"><%= votable.votes.votes_up.count - votable.votes.votes_down.count %></span>
-  <%= link_to '<span class="glyphicon glyphicon-triangle-bottom vote-icon" aria-hidden="true"></span> '.html_safe, path_down, remote: true, method: :post  %>
+  <%= link_to '<span class="glyphicon glyphicon-triangle-bottom vote-icon" aria-hidden="true"></span> '.html_safe, path_down, method: verb, remote: true  %>
 </div>

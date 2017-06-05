@@ -22,24 +22,7 @@ class Vote < ApplicationRecord
     votable.votes.votes_up.count - votable.votes.votes_down.count
   end
 
-  # def self.already_vote?(user_id, id, method)
-  #   if method == "Question"
-  #     votes = Question.find(id).votes
-  #   else
-  #     votes = Answer.find(id).votes
-  #   end
-  #   if votes.find_by(user_id: user_id) == nil
-  #     false
-  #   else
-  #     true
-  #   end
-  # end
-  # def self.destroy_vote?(user_id, id, method)
-  #   if method == "Question"
-  #     votes = Question.find(id).votes
-  #   else
-  #     votes = Answer.find(id).votes
-  #   end
-  #   votes.find_by(user_id: user_id).destroy
-  # end
+  def self.already_vote?(user, votable)
+    votable.votes.find_by(user_id: user.id)
+  end
 end

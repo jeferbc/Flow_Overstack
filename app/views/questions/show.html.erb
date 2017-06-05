@@ -32,8 +32,17 @@ $(document).ready(function (){
     </div>
     <div class="row">
       <div class="col-sm-1">
-        <%= render 'votes/votes_panel', { votable: @question, path_up: question_votes_path(@question, liked: true),
-          path_down: question_votes_path(@question, liked: false) } %>
+        <% if user_signed_in? %>
+          <% vote = Vote.already_vote?(current_user, @question) %>
+          <% if vote %>
+            <%= render 'votes/votes_panel', { votable: @question, path_up: question_vote_path(@question, vote),
+              path_down: question_vote_path(@question, vote), verb: :delete } %>
+          <% else %>
+            <%= render 'votes/votes_panel', { votable: @question, verb: :post,
+              path_up: question_votes_path(@question, liked: true),
+              path_down: question_votes_path(@question, liked: false) } %>
+          <% end %>
+        <% end %>
       </div>
       <div class="col-sm-9">
         <div class="question-body">
