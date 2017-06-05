@@ -3,7 +3,7 @@
 # Table name: votes
 #
 #  id           :integer          not null, primary key
-#  amount       :boolean
+#  liked        :boolean
 #  votable_type :string
 #  votable_id   :integer
 #  user_id      :integer

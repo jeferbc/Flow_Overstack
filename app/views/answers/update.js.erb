@@ -1,0 +1,3 @@
+<% if @answer.errors.empty? %>
+  $('#edit_answer_<%= @answer.id %>').replaceWith(' <%= j render "questions/answer_panel", { answer: @answer, question: @answer.question } %>');
+<% end %>

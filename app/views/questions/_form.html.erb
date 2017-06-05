@@ -2,7 +2,6 @@
   <% if question.errors.any? %>
     <div id="errors_explanation">
       <h2><%=pluralize(question.errors.count,"error")%> Prohibited this product from being saved:</h2>
-
       <ul>
       <% question.errors.full_messages.each do |message| %>
         <li><%=message %></li>
@@ -10,19 +9,16 @@
       </ul>
     </div>
   <% end %>
-
   <div class="form-group">
     <%= f.label :title %>
     <%= f.text_field :title, class: "form-control"%>
   </div>
-
   <div class="form-group">
     <%= f.label :content %>
-    <%= f.text_area :content, class: "form-control"%>
+    <%= f.text_area :content, class: "form-control", rows: 10 %>
   </div>
-  <%= hidden_field_tag "question[user_id]", current_user.id %>
-  <div class="actions">
-    <%= f.submit 'Guardar', class:"btn btn-success" %>
-    <%= link_to 'Cancelar', questions_path, class: 'btn btn-danger' %>
+  <div>
+    <%= f.submit 'Ask', class:"btn btn-primary btn-sm" %>
+    <%= link_to 'Cancel', questions_path, class: 'btn btn-default btn-sm' %>
   </div>
 <% end %>

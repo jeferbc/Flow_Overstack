@@ -36,9 +36,11 @@ ActiveRecord::Schema.define(version: 20161129052750) do
   create_table "questions", force: :cascade do |t|
     t.string   "title"
     t.text     "content"
+    t.datetime "active",     default: '2017-05-30 18:26:28'
+    t.integer  "viewed",     default: 0
     t.integer  "user_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",                                 null: false
+    t.datetime "updated_at",                                 null: false
     t.index ["user_id"], name: "index_questions_on_user_id"
   end
 
@@ -62,7 +64,7 @@ ActiveRecord::Schema.define(version: 20161129052750) do
   end
 
   create_table "votes", force: :cascade do |t|
-    t.boolean  "amount"
+    t.boolean  "liked"
     t.string   "votable_type"
     t.integer  "votable_id"
     t.integer  "user_id"

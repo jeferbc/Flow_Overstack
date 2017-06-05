@@ -1,0 +1,39 @@
+<div class="answer" id="answer-<%= answer.id %>">
+  <div class="row">
+    <div class="col-sm-1">
+      <% if user_signed_in? %>
+        <% vote = Vote.already_vote?(current_user, answer) %>
+        <% if vote %>
+          <%= render 'votes/votes_panel', { votable: answer, path_up: question_answer_vote_path(answer.question, answer, vote),
+            path_down: question_answer_vote_path(answer.question, answer, vote), verb: :delete } %>
+        <% else %>
+        <%= render 'votes/votes_panel', { votable: answer, path_up: question_answer_votes_path(question, answer, liked: true),
+          path_down: question_answer_votes_path(question, answer, liked: false), verb: :post } %>
+        <% end %>
+      <% end %>
+    </div>
+    <div class="col-sm-9">
+      <div class="content-body">
+        <%= markdown(answer.content) %>
+      </div>
+    </div>
+    <div class="col-sm-2">
+      <%= render 'questions/info_panel', { data: answer, question: answer.question,
+        path_edit: edit_question_answer_path(answer.question, answer), path_delete: question_answer_path(answer.question, answer) } %>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-9 col-sm-offset-1">
+      <% if user_signed_in? %>
+        <%= render 'comments/add_comment', { path: [question, answer, Comment.new], commentable: answer } %>
+      <% end %>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-9 col-sm-offset-1">
+      <div class="comment-list">
+        <%= render 'questions/comment_list', commentable: answer %>
+      </div>
+    </div>
+  </div>
+</div>

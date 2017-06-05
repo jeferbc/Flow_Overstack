@@ -1,0 +1,21 @@
+<tr>
+  <td class="comment" id="<%= comment.id %>">
+    <div class="comment-body"><%= markdown(comment.content).humanize %> -
+      <span class="comment-user">
+        <%= comment.user.email.split('@')[0].humanize %> -
+        <%= comment.created_at.strftime("%b %d '%y") %>
+      </span>
+      <% if comment.user == current_user %>
+        <span class="icons">
+          <% if comment.commentable.kind_of?(Question) %>
+            <%= link_to ''.html_safe, edit_question_comment_path(id: comment.id, question_id: comment.commentable.id), class: 'fa fa-pencil-square-o', remote: true -%>
+            <%= link_to ''.html_safe, question_comment_path(id: comment.id, question_id: comment.commentable.id), method: :delete, data: {confirm: "Are you sure you want to delete this comment?"}, class: 'fa fa-trash', remote: true %>
+          <% elsif comment.commentable.kind_of?(Answer) %>
+            <%= link_to ''.html_safe, edit_question_answer_comment_path(id: comment.id, question_id: comment.commentable.question.id, answer_id: comment.commentable.id), class: 'fa fa-pencil-square-o', remote: true -%>
+            <%= link_to ''.html_safe, question_answer_comment_path(id: comment.id, question_id: comment.commentable.question.id, answer_id: comment.commentable.id), method: :delete, data: {confirm: "Are you sure you want to delete this comment?"}, class: 'fa fa-trash', remote: true %>
+          <% end %>
+        </span>
+      <% end %>
+    </div>
+  </td>
+</tr>

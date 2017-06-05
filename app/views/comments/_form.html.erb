@@ -1,0 +1,9 @@
+<%= form_for(path,  remote: true) do |f| %>
+  <div class="form-group">
+    <%= f.text_area :content, class:"form-control", id: "comment-content-#{commentable.class.name}-#{commentable.id}", placeholder: "Add a comment" %>
+  </div>
+  <div class="actions">
+    <%= f.submit 'Coment', class: "btn btn-primary btn-sm" %>
+    <button class="btn btn-default btn-sm" data-toggle="collapse" data-target="#comment-<%= commentable.class.name %>-<%= commentable.id %>">Close</a>
+  </div>
+<% end %>

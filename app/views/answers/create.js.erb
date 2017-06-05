@@ -1,0 +1,4 @@
+<% if @answer.errors.empty? %>
+  $('.answers-list').append(' <%= j render "questions/answer_panel", { answer: @answer, question: @answer.question } %>');
+  $('#answer_content').val("");
+<% end %>
