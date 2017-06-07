@@ -1,6 +1,9 @@
 <% if user_signed_in? %>
-  <div class="add-comment" id="add-comment-<%= commentable.class.name %>-<%= commentable.id %>">
-    <a href="javascript:void(0)" data-toggle="collapse" data-target="#comment-<%= commentable.class.name %>-<%= commentable.id %>">Add Comment</a>
+  <div class="add-comment" >
+    <a href="javascript:void(0)" id="add-comment-<%= commentable.class.name %>-<%= commentable.id %>"
+      data-toggle="collapse" data-target="#comment-<%= commentable.class.name %>-<%= commentable.id %>">
+      Add Comment
+    </a>
   </div>
   <div class="collapse" id="comment-<%= commentable.class.name %>-<%= commentable.id %>">
     <%= render 'comments/form', { path: path, commentable: commentable } %>

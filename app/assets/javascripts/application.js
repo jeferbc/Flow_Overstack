@@ -15,9 +15,3 @@
 //= require turbolinks
 //= require_tree .
 //= require bootstrap-sprockets
-
-$("#plus-vote").on("click",function(e){
-  alert("entro");
-  e.preventDefault();
-  return false;
-});

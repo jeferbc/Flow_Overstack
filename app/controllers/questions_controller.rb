@@ -1,6 +1,6 @@
 class QuestionsController < ApplicationController
   before_action :authenticate_user!, only: [:new, :update, :detroy]
-  before_action :set_question, only: [:show, :edit, :update, :destroy, :track_view]
+  before_action :set_question, except: [:index, :new, :create]
   before_action :set_ransack
 
   def index
