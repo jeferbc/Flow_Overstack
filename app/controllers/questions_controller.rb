@@ -48,7 +48,7 @@ class QuestionsController < ApplicationController
 
   def track_view
     @question.update(viewed: @question.viewed + 1)
-    redirect_to question_path(id: @question.id)
+    redirect_to question_path(@question)
   end
 
   private

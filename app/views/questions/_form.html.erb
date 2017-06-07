@@ -1,10 +1,10 @@
 <%= form_for(question) do |f| %>
   <% if question.errors.any? %>
     <div id="errors_explanation">
-      <h2><%=pluralize(question.errors.count,"error")%> Prohibited this product from being saved:</h2>
+      <h2><%= pluralize(question.errors.count,"error") %> Prohibited this product from being saved:</h2>
       <ul>
       <% question.errors.full_messages.each do |message| %>
-        <li><%=message %></li>
+        <li><%= message %></li>
       <% end %>
       </ul>
     </div>

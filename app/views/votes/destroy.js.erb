@@ -3,6 +3,6 @@ $("#total-votes-<%= @votable.class.name %>-<%= @votable.id %>").text(<%= @votes 
   $("#votes-<%= @votable.class.name %>-<%= @votable.id %>").replaceWith('<%= j render "votes_panel", { votable: @votable, verb: :post, path_up: question_votes_path(@votable, liked: true), path_down: question_votes_path(@votable, liked: false) } %>');
   $("#votes-<%= @votable.class.name %>-<%= @votable.id %>").removeClass('already-vote')
 <% else %>
-$("#votes-<%= @votable.class.name %>-<%= @votable.id %>").replaceWith('<%= j render "votes_panel", { votable: @votable, verb: :post, path_up: question_answer_votes_path(@votable.question, @votable, liked: true), path_down: question_answer_votes_path(@votable.question, @votable, liked: false) } %>');
-$("#votes-<%= @votable.class.name %>-<%= @votable.id %>").removeClass('already-vote')
-  <% end %>
+  $("#votes-<%= @votable.class.name %>-<%= @votable.id %>").replaceWith('<%= j render "votes_panel", { votable: @votable, verb: :post, path_up: question_answer_votes_path(@votable.question, @votable, liked: true), path_down: question_answer_votes_path(@votable.question, @votable, liked: false) } %>');
+  $("#votes-<%= @votable.class.name %>-<%= @votable.id %>").removeClass('already-vote')
+<% end %>

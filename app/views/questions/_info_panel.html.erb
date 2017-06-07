@@ -20,8 +20,13 @@
           <a class="fb-xfbml-parse-ignore" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse">Share</a>
         </div>
         <% if user_signed_in? && current_user == data.user  %>
-          <h3 class="icons"><%= link_to "", path_edit, class: 'fa fa-pencil-square-o', remote: true %></h3>
-          <h3 class="icons"><%= link_to "", path_delete, class: 'fa fa-trash', method: :delete, remote: true, data: { confirm: 'Are you sure?' }  %></h3>
+          <% if data.kind_of?(Question) %>
+            <h3 class="icons"><%= link_to "", path_edit, class: 'fa fa-pencil-square-o' %></h3>
+            <h3 class="icons"><%= link_to "", path_delete, class: 'fa fa-trash', method: :delete, data: { confirm: 'Are you sure?' }  %></h3>
+          <% else %>
+            <h3 class="icons"><%= link_to "", path_edit, class: 'fa fa-pencil-square-o', remote: true %></h3>
+            <h3 class="icons"><%= link_to "", path_delete, class: 'fa fa-trash', method: :delete, remote: true, data: { confirm: 'Are you sure?' }  %></h3>
+          <% end %>
         <% end %>
       </td>
     </tr>

@@ -30,28 +30,30 @@ $(document).ready(function (){
         </div>
       </div>
     </div>
-    <div class="row">
-      <div class="col-sm-1">
-        <% if user_signed_in? %>
-          <% vote = Vote.already_vote?(current_user, @question) %>
-          <% if vote %>
-            <%= render 'votes/votes_panel', { votable: @question, path_up: question_vote_path(@question, vote),
-              path_down: question_vote_path(@question, vote), verb: :delete } %>
-          <% else %>
-            <%= render 'votes/votes_panel', { votable: @question, verb: :post,
-              path_up: question_votes_path(@question, liked: true),
-              path_down: question_votes_path(@question, liked: false) } %>
+    <div class="question-panel">
+      <div class="row">
+        <div class="col-sm-1">
+          <% if user_signed_in? %>
+            <% vote = Vote.already_vote?(current_user, @question) %>
+            <% if vote %>
+              <%= render 'votes/votes_panel', { votable: @question, path_up: question_vote_path(@question, vote),
+                path_down: question_vote_path(@question, vote), verb: :delete } %>
+            <% else %>
+              <%= render 'votes/votes_panel', { votable: @question, verb: :post,
+                path_up: question_votes_path(@question, liked: true),
+                path_down: question_votes_path(@question, liked: false) } %>
+            <% end %>
           <% end %>
-        <% end %>
-      </div>
-      <div class="col-sm-9">
-        <div class="question-body">
-          <%= markdown(@question.content) %>
         </div>
-      </div>
-      <div class="col-sm-2">
-        <%= render 'info_panel', { data: @question, question: @question,
-          path_edit: edit_question_path(@question), path_delete: question_path(@question) } %>
+        <div class="col-sm-9">
+          <div class="question-body">
+            <%= markdown(@question.content) %>
+          </div>
+        </div>
+        <div class="col-sm-2">
+          <%= render 'info_panel', { data: @question, question: @question,
+            path_edit: edit_question_path(@question), path_delete: question_path(@question) } %>
+        </div>
       </div>
     </div>
     <div class="row">
